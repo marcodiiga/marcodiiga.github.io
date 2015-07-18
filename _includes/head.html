@@ -27,7 +27,6 @@
     });
 
     function type() {
-      console.log(caption.substr(0, captionLength++));
       captionEl.html(caption.substr(0, captionLength++));
       if(captionLength < caption.length+1) {
         typeTimeout = setTimeout('type()', 50);
