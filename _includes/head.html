@@ -6,7 +6,69 @@
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+  <link rel="stylesheet" href="/octicons/octicons.css"/>
+  <link rel="stylesheet" href="/css/pygments_monokai.css">
+  <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript">
+
+    var captionLength = 0;
+    var caption = ' // Drink responsibly';
+    var cursorBlinkAnimation;
+    var eraseTimeout;
+    var typeTimeout;
+
+    $(document).ready(function() {
+      captionEl = $('#caption');
+    });
+
+    function type() {
+      console.log(caption.substr(0, captionLength++));
+      captionEl.html(caption.substr(0, captionLength++));
+      if(captionLength < caption.length+1) {
+        typeTimeout = setTimeout('type()', 50);
+      }
+    }
+
+    function erase() {
+      captionEl.html(caption.substr(0, captionLength--));
+      if(captionLength >= 0) {
+          eraseTimeout = setTimeout('erase()', 50);
+      } else {
+          captionLength = 0;
+          clearInterval(cursorBlinkAnimation);
+          $("#cursor").hide();
+      }
+    }
+
+    function cursorAnimation() {
+      $('#cursor').animate({
+          opacity: 0
+      }, 'fast', 'swing').animate({
+          opacity: 1
+      }, 'fast', 'swing');
+    }
+
+    function startComment(text) {
+      clearTimeout(eraseTimeout);
+      clearTimeout(cursorBlinkAnimation);
+      clearTimeout(typeTimeout);
+      $("#cursor").show();
+      cursorBlinkAnimation = setInterval ('cursorAnimation()', 600);
+      typeTimeout = setTimeout(function() { type(); }, 1500);
+    }
+
+    function endComment(text) {
+      clearTimeout(eraseTimeout);
+      clearTimeout(cursorBlinkAnimation);
+      clearTimeout(typeTimeout);
+      setTimeout(function() { erase(); }, 1000);
+    }
+
+  </script>
 </head>

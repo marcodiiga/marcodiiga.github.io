@@ -16,11 +16,16 @@
     letter-spacing: -1px;
     margin-bottom: 0;
     float: left;
+    font-family: monospace;
 
     &,
     &:visited {
         color: $grey-color-dark;
     }
+}
+
+.site-title:hover {
+  text-decoration: none;
 }
 
 .site-nav {
@@ -91,6 +96,35 @@
 /**
  * Site footer
  */
+
+ img.grayscale{
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);  /* For Webkit browsers */
+    filter: gray;  /* For IE 6 - 9 */
+    -webkit-transition: all .6s ease;  /* Transition for Webkit browsers */
+}
+
+img.grayscale:hover{
+    filter: grayscale(0%);
+    -webkit-filter: grayscale(0%);
+    filter: none;
+    -webkit-transition: all .6s ease;  /* Transition for Webkit browsers */
+}
+
+img.invert{
+   filter: invert(60%);
+   -webkit-filter: invert(60%);  /* For Webkit browsers */
+   filter: gray;  /* For IE 6 - 9 */
+   -webkit-transition: all .6s ease;  /* Transition for Webkit browsers */
+}
+
+img.invert:hover{
+   filter: invert(0%);
+   -webkit-filter: invert(0%);
+   filter: none;
+   -webkit-transition: all .6s ease;  /* Transition for Webkit browsers */
+}
+
 .site-footer {
     border-top: 1px solid $grey-color-light;
     padding: $spacing-unit 0;

@@ -2,7 +2,9 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
+    <a class="site-title" href="{{ site.baseurl }}/">
+      <span onmouseover="startComment(this)" onmouseout="endComment(this)"><span class="mega-octicon octicon-terminal"></span> {{ site.title }}</span><span style="color: rgb(104,99,73);" id="caption"></span><span id="cursor" style="display:none;">|</span>
+    </a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
