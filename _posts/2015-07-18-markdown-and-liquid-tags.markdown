@@ -38,6 +38,8 @@ New posts should be placed in the `_posts` directory and follow the name convent
 
 Links are inserted with the usual markdown syntax `[caption](http://link.com)`
 
+> Quotes are also possible with angle brackets > prepending the sentences
+
 Mathematical formulas
 =====================
 Mathematical notations and expressions are supported through MathJax
