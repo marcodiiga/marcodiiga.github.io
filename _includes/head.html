@@ -54,7 +54,6 @@
 
     function startComment(text) {
       clearTimeout(eraseTimeout);
-      clearTimeout(cursorBlinkAnimation);
       clearTimeout(typeTimeout);
       $("#cursor").show();
       cursorBlinkAnimation = setInterval ('cursorAnimation()', 600);
@@ -63,9 +62,8 @@
 
     function endComment(text) {
       clearTimeout(eraseTimeout);
-      clearTimeout(cursorBlinkAnimation);
       clearTimeout(typeTimeout);
-      setTimeout(function() { erase(); }, 1000);
+      eraseTimeout = setTimeout(function() { erase(); }, 1000);
     }
 
   </script>
