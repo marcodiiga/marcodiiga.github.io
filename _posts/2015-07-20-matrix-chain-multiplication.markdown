@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Matrix Chain Multiplication"
-categories: dynamic-programming algorithms
+tags: dynamic-programming algorithms
 ---
 
 [Matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication) is a fundamental problem in linear algebra.
