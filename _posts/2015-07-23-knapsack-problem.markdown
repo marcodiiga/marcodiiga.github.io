@@ -7,7 +7,7 @@ The [knapsack problem](https://en.wikipedia.org/wiki/Knapsack_problem) is a comm
 combinatorial optimization problem: given a set of items \\( S = {1,...,n} \\) where
 each item \\( i \\) has a size \\( s_i \\) and value \\( v_i \\) and a knapsack
 capacity \\( C \\), find the subset \\( S^{\prime} \subset S \\) s.t.
-\\( \sum_{i \in S^{\prime}}{s_i} \le C \\) for which \\( \sum_{i \in S'}{v_i} \\) is maximum.
+\\( \sum_{i \in S^{\prime}}{s_i} \le C \\) 
 
 A less mathematical but more intuitive explanation:
 
