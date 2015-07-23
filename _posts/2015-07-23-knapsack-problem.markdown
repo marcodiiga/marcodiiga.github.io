@@ -6,8 +6,8 @@ tags: algorithms dynamic-programming
 The [knapsack problem](https://en.wikipedia.org/wiki/Knapsack_problem) is a common
 combinatorial optimization problem: given a set of items \\( S = {1,...,n} \\) where
 each item \\( i \\) has a size \\( s_i \\) and value \\( v_i \\) and a knapsack
-capacity \\( C \\), find the subset \\( S' \subset S \\) s.t. \\( \sum_{i\in S'}{s_i} \le C \\) for
-which \\( \sum_{i\in S'}{v_i} \\) is maximum.
+capacity \\( C \\), find the subset \\( S' \subset S \\) s.t. \\( \sum_{i \in S'}{s_i} \le C \\) for
+which \\( \sum_{i \in S'}{v_i} \\) is maximum.
 
 A less mathematical but more intuitive explanation:
 
