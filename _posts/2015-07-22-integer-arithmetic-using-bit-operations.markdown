@@ -144,6 +144,9 @@ int division(int x, int y) {
 }
 {% endhighlight %}
 
+We will now complement this post with other non-strictly bit operation based approaches
+to build upon the operations we've seen to avoid common library functions.
+
 Exponentiation
 ==============
 Calculating the *n*-th power of a number can also be efficiently done with a
@@ -198,3 +201,47 @@ $$ x \pmod y = -x \pmod y = x \pmod{-y} \\
  x \pmod y = -(-x \pmod{-y}) $$
 
 as particular cases if negative integer support needs to be implemented.
+
+Square root
+===========
+The solution builds upon a simpified case of [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method).
+Newton's method builds on the tangent equation of a first-guess point for a function
+
+$$y = f'(x_n) \, (x-x_n) + f(x_n)$$
+
+by setting \\( y = 0 \\) and using the \\( x \\) coordinate as the next input, we
+obtain the recursive relation
+
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+
+and since we're searching for the point for which \\( f(x) = x^2 - S = 0 \\), we have
+
+$$x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}=x_n-\frac{x_n^2-S}{2x_n}=\frac{1}{2}\left(x_n+\frac{S}{x_n}\right)$$
+
+This last relation is the so-called [Babylonian method](https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method)
+which basically consists of a first-time approximation for \\( x \\) (the closer to the
+real square root, the faster the convergence) and of a recursive relation which ends
+when we're satisfied with the error range (i.e. we're operating in a sufficiently
+small interval)
+
+{% highlight c++ %}
+#include <iostream>
+using namespace std;
+
+float squareRoot(float n) {
+  float x = n;
+  float y = 1; // S / x == n / n
+  float e = 0.00001f; // Accuracy level
+  while (x - y > e) {
+    x = (x + y) / 2;
+    y = n / x;
+  }
+  return x;
+}
+
+int main() {
+  int n = 50;
+  float sq = squareRoot(static_cast<float>(n));
+  cout << "Approximate square root of " << n << " is " << sq;
+}
+{% endhighlight %}

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Matrix Chain Multiplication"
+title:  "Matrix chain multiplication - MCOP"
 tags: dynamic-programming algorithms
 ---
 
