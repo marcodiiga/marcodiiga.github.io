@@ -8,8 +8,8 @@ combinatorial optimization problem: given a set of items \\( S = {1,...,n} \\) w
 each item \\( i \\) has a size \\( s_i \\) and value \\( v_i \\) and a knapsack
 capacity \\( C \\), find the subset \\( S^{\prime} \subset S \\) such that
 
-$$  max \ \sum_{i \in S{\prime}}{v_i}\\
-s.t. \\
+$$  \mbox{maximize} \ \sum_{i \in S{\prime}}{v_i}\\
+s.t. \
 \sum_{i \in S^{\prime}}{s_i} \le C $$
 
 A less mathematical but more intuitive explanation:
