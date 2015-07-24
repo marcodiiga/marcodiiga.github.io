@@ -204,7 +204,8 @@ int main() {
 {% endhighlight %}
 
 The complexity of this code is in the order of \\( O(N \cdot I) \\) where \\( I \\)
-is the number of elements in the starting set.
+is the number of elements in the starting set. This is a [pseudopolynomial](https://en.wikipedia.org/wiki/Pseudo-polynomial_time)
+complexity.
 
 Integer partition problem
 =========================
@@ -240,10 +241,73 @@ int main() {
 }
 {% endhighlight %}
 
-Unbounded knapsack problem with subset sum
+Unbounded knapsack problem
 --------------------------
+
 The unbounded knapsack problem is not part of the 0/1 Knapsack class since there is
 no upper bound on the number of elements (we can grab as many as we want).
+
+The recursion works in a similar way to the so-called *Minimum coin change* problem
+with a difference: we're not interested in the minimum amount of coins but rather in
+the maximum value we can obtain with a given set of weights by building a recursive
+set of optimal values at each step (optimal substructure)
+
+$$ \mbox{base case} \ m(0) = 0 \\
+\ m[w]= \max_{w_i \le w}(v_i+m[w-w_i]) $$
+
+with \\( w_i \\) being the *i-th* weight and \\( v_i \\) being the *i-th* value.
+
+{% highlight c++ %}
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int ukp(const vector<int>& V, const vector<int>& W, const int& C) {
+
+  vector<int> m(C + 1 /* 1-based */, 0);
+
+  // Base case m[0] = 0 with empty set included above
+
+  for (int c = 1; c <= C; ++c) {
+    int max = 0;
+    for (int i = 0; i < W.size(); ++i) {
+
+      int w = W[i];
+      int v = V[i];
+
+      if (w > c)
+        continue;
+
+      int opt = m[c - w] + v;
+
+      if (opt > max)
+        max = opt;
+    }
+    m[c] = max;
+  }
+
+  return m[C];
+}
+
+int main() {
+
+  const vector<int> v = { 11, 34, 22, 1,  1 };
+  const vector<int> w = {  3,  7,  4, 3,  1 };
+  const int C = 11;
+
+  cout << "Unbounded knapsack problem solution with the given input: "
+    << ukp(v, w, C); // 56
+
+  return 0;
+}
+{% endhighlight %}
+
+The algorithm has \\( O(nW) \\) complexity and this doesn't contradict the NP-completeness
+statement since \\( W \\) requires \\( log \ W \\) bits and thus this is a
+[pseudopolynomial](https://en.wikipedia.org/wiki/Pseudo-polynomial_time) complexity.
+
+Unbounded knapsack problem for subset sum
+-----------------------------------------
 
 For unbounded knapsack the subset sum problem becomes
 
