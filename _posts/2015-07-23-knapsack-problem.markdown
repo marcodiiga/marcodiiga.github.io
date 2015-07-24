@@ -302,8 +302,8 @@ int main() {
 }
 {% endhighlight %}
 
-The algorithm has \\( O(nW) \\) complexity and this doesn't contradict the NP-completeness
-statement since \\( W \\) requires \\( log \ W \\) bits and thus this is a
+The algorithm has \\( O(n \cdot W) \\) complexity and this doesn't contradict the NP-completeness
+statement since \\( W \\) requires \\( \log_{2}{W} \\) bits and thus this is a
 [pseudopolynomial](https://en.wikipedia.org/wiki/Pseudo-polynomial_time) complexity.
 
 Unbounded knapsack problem for subset sum
