@@ -354,9 +354,3 @@ int main() {
   return 0;
 }
 {% endhighlight %}
-
-References
-=======
-* [Wikipedia](https://wikipedia.org)
-
-* [GeeksForGeeks](http://www.geeksforgeeks.org/)
