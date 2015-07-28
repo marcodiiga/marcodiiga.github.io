@@ -1,0 +1,97 @@
+graph G {
+  e1 [label="123"];
+
+  e2 [label="123"];
+  e3 [label="213"];
+  e4 [label="321"];
+
+  e5 [label="123"];
+  e6 [label="213"];
+  e7 [label="132"];
+  e8 [label="213"];
+  e9 [label="123"];
+  e10 [label="231"];
+  e11 [label="321"];
+  e12 [label="231"];
+  e13 [label="312"];
+
+  e14 [label="123", fillcolor=red, style=filled];
+  e15 [label="321"];
+  e16 [label="132"];
+  e17 [label="213", fillcolor=green, style=filled];
+  e18 [label="312"];
+  e19 [label="231"];
+  e20 [label="132"];
+  e21 [label="231"];
+  e22 [label="123", fillcolor=red, style=filled];
+  e23 [label="213", fillcolor=green, style=filled];
+  e24 [label="312"];
+  e25 [label="231"];
+  e26 [label="123", fillcolor=red, style=filled];
+  e27 [label="321"];
+  e28 [label="132"];
+  e29 [label="231"];
+  e30 [label="132"];
+  e31 [label="213", fillcolor=green, style=filled];
+  e32 [label="321"];
+  e33 [label="123", fillcolor=red, style=filled];
+  e34 [label="312"];
+  e35 [label="213", fillcolor=green, style=filled];
+  e36 [label="231"];
+  e37 [label="132"];
+  e38 [label="312"];
+  e39 [label="321"];
+  e40 [label="213", fillcolor=green, style=filled];
+
+  e1 -- e2;
+  e1 -- e3;
+  e1 -- e4;
+
+  e2 -- e5;
+  e2 -- e6;
+  e2 -- e7;
+
+  e3 -- e8;
+  e3 -- e9;
+  e3 -- e10;
+
+  e4 -- e11;
+  e4 -- e12;
+  e4 -- e13;
+
+  e5 -- e14;
+  e5 -- e15;
+  e5 -- e16;
+
+  e6 -- e17;
+  e6 -- e18;
+  e6 -- e19;
+
+  e7 -- e20;
+  e7 -- e21;
+  e7 -- e22;
+
+  e8 -- e23;
+  e8 -- e24;
+  e8 -- e25;
+
+  e9 -- e26;
+  e9 -- e27;
+  e9 -- e28;
+
+  e10 -- e29;
+  e10 -- e30;
+  e10 -- e31;
+
+  e11 -- e32;
+  e11 -- e33;
+  e11 -- e34;
+
+  e12 -- e35;
+  e12 -- e36;
+  e12 -- e37;
+
+  e13 -- e38;
+  e13 -- e39;
+  e13 -- e40;
+}
