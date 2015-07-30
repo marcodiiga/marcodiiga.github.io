@@ -5,7 +5,7 @@ tags: algorithms
 ---
 
 A string of length \\( n \\) has \\( n! \\) permutations without repetitions. A
-simple algorithm to generate all permutations of a given string follows
+simple **incremental** algorithm to generate all permutations of a given string follows
 
 {% highlight c++ %}
 #include <iostream>
@@ -129,8 +129,8 @@ int main() {
 
 Both the permutations and combinations algorithms presented make use of the backtracking
 paradigm and have complexity of \\( O(n!) \\) and \\( O(2^n) \\). They're intended
-as naive algorithms to generate combinations and permutations. Other more efficient
-but more complex methods (e.g. [Heap](https://en.wikipedia.org/wiki/Heap%27s_algorithm))
+as naive algorithms to generate combinations and permutations. It has to be noted that
+other more efficient but more complex methods (e.g. [Heap](https://en.wikipedia.org/wiki/Heap%27s_algorithm))
 are available.
 
 
@@ -216,8 +216,8 @@ The algorithm above also allows us to quickly find the next duplicate of a given
 permutation (it is trivial to substitute the input permutation to the first result
   of the `std::sort` line).
 
-Ranking
-=======
+Ranking and unranking permutations
+==================================
 A common problem when dealing with permutations is obtaining the **rank** of a permutation,
 i.e. its index in the list of permutations sorted lexicographically.
 
@@ -228,15 +228,18 @@ the complexity would remain exponential.
 A smarter approach would be to [count the previous smaller permutations](http://www.geeksforgeeks.org/lexicographic-rank-of-a-string/)
 that came before the input one.
 
+The key to understanding both ranking and unranking for permutations lies in the
+following lines so make sure to understand them.
+
 As an example: suppose we were asked to rank the permutation \\( \{ 3,4,1,2 \} \\).
-The first element is 3 and there are 2 elements which are smaller than it: 1
+The first element is 3 and there are 2 elements in the set which are smaller than it: 1
 and 2. This means there have to be other permutations of the form
 
 $$ \text{1 x x x} \\
    \text{2 x x x} $$
 
 that came **before** our permutation (since it starts with 3). How many permutations
-are included in the two lines above? Each one comprises \\( 3! \\) permutations
+are generated from the two lines above? Each one comprises \\( 3! \\) permutations
 since there are three elements 'shuffling', thus they yield a grand-total of
 \\( 2 \cdot 3! \\) permutations before ours.
 
@@ -252,24 +255,46 @@ Let's repeat this process for the last two elements and we have a total of
 
 $$ 2 \cdot 3! + 2 \cdot 2! + 0 + 0 = 16 $$
 
-Since we're numbering the permutations from 1, the permutation we were given has
-rank **17**. The code to calculate the rank of a permutation follows
+If we're numbering the permutations from 0, the permutation we were given has
+rank **16**.
+
+Thus the pseudocode for the ranking algorithm is
+
+    rank = 0
+    for each element i in the input permutation
+       smallerElements = find the number of smaller elements from i onward
+
+       rank += smallerElements * (number of elements from i+1 to the end)!
+
+
+Unranking works similarly: we're given the input number 16 and we want to know
+which permutation it corresponds to (in the lexicographic order list).
+
+For this problem we're also given the input set (i.e. the elements to permute):
+\\( \{ 1,2,3,4 \} \\). Notice that they can be unordered too.
+
+[TODO]
+
+
+The code to calculate ranking and unranking for permutations follows
 
 {% highlight c++ %}
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <iterator>
 using namespace std;
 
-unsigned int factorial(unsigned int n) {
-  if (n == 0)
+int factorial(int i) { // Utility function
+  if (i == 0)
     return 1;
-  return n * factorial(n - 1);
+  else
+    return i*factorial(i - 1);
 }
 
-int getRankForPermutation(vector<int>& v) {
+int getRankForPermutation(const vector<int>& v) {
 
-  int rank = 1; // Start from 1
+  int rank = 0; // Start from 0
 
   // Per each character in the input permutation
   for (int i = 0; i < v.size(); ++i) {
@@ -283,22 +308,71 @@ int getRankForPermutation(vector<int>& v) {
     });
 
     // Calculate the previous smaller permutations by keeping i fixed
-    rank += smallerChars * factorial(v.size() - i - 1);
+    rank += smallerChars * factorial(static_cast<int>(v.size()) - i - 1);
   }
 
   return rank;
 }
 
-int main() {
-  vector<int> vec = { 3, 4, 1, 2 };
-  cout << "Rank is " << getRankForPermutation(vec); // 17
+vector<int> unrankPermutation(vector<int> vec, int rank) {
+
+  sort(vec.begin(), vec.end()); // Sort the input set so that we have each index
+                                // telling us how many elements are there less than it
+
+  int remainingIndex = rank;
+  vector<int> solution;
+  while (vec.size() > 0) {
+
+    int maximumFound = -1;
+    int i = 0;
+    for (; i < vec.size(); ++i) {
+      // Calculate the previous permutations with this element as the leading element
+      int previousPermutations = i * factorial(static_cast<int>(vec.size()) - 1);
+
+      // The important check here is whether the previous permutations fit into the
+      // rank we were given. Notice that the remaining index might even be zero. In that
+      // case we just position the last elements of the permutation.
+      if (previousPermutations > maximumFound && previousPermutations <= remainingIndex)
+        maximumFound = previousPermutations;
+      else if (previousPermutations > remainingIndex) { // We're not allowed to exceed the rank
+        break;
+      }
+    }
+    --i; // i was the solution either if we found a maximum or we terminated our variables
+
+    solution.push_back(vec[i]);
+    remainingIndex -= maximumFound;
+    vec.erase(vec.begin() + i);
+  }
+
+  return solution;
+}
+
+int main(int argc, char * argv[]) {
+
+  vector<int> vec = { 4, 3, 2, 1 };
+  int rank;
+
+  cout << "~-~-~-~ Indices are 0-based ~-~-~-~" << endl << endl;
+
+  rank = getRankForPermutation(vec);
+  cout << "Rank for permutation { ";
+  copy(vec.begin(), vec.end(), ostream_iterator<int>(cout, " "));
+  cout << "} is " << rank << endl << endl;
+
+
+  vector<int> permutation = unrankPermutation(vec, rank);
+  cout << "Rank " << rank << " permutation is { ";
+  copy(permutation.begin(), permutation.end(), ostream_iterator<int>(cout, " "));
+  cout << "}" << endl;
+
   return 0;
 }
 {% endhighlight %}
 
-Complexity: \\( O(n^2) \\). Precomputing or using a table for the factorial
+Complexity for the algorithms: \\( O(n^2) \\). Precomputing or using a table for the factorial
 calculations would reduce the runtime. The code above could also work for duplicate
-characters but
+characters but it would need some adjustments, in particular:
 
 1. The duplicate characters would have to be included as smaller elements
 
