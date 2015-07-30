@@ -271,10 +271,38 @@ Unranking works similarly: we're given the input number 16 and we want to know
 which permutation it corresponds to (in the lexicographic order list).
 
 For this problem we're also given the input set (i.e. the elements to permute):
-\\( \{ 1,2,3,4 \} \\). Notice that they can be unordered too.
+\\( \{ 2,1,4,3 \} \\). Notice that they can be unordered.
 
-[TODO]
+We start by sorting the input set, this allows us to use each index to automatically
+know how many smaller elements are there for a given element: \\( \{ 1,2,3,4 \} \\).
+Then per each element we calculate the number of permutations less than the one
+with that element as leading one, e.g. for the first element 1 we calculate
+\\( 0 \cdot 3! = 0 \\) permutations before it (1 is the smallest element). 0 permutations
+surely fits into the asked 16 rank thus we store it as a potential candidate. We then
+try to have 2 as leading element and calculate that there are \\( 1 \cdot 3! = 6 \\)
+permutations, this fits even better in the 16 rank and thus we store it as new candidate.
+We then try 3 as discover that it has 12 permutations less than the first permutation
+with it as leading element - even better. 4 doesn't work (it yields 18 and that's too
+much to fit into 16) and thus we stop searching for a first element.
 
+The first element is therefore 3 and since there are 12 permutations starting with
+element less than 3, we still have \\( 16-12 \\) permutations to cover. The process
+then starts again to find the next digit (3 is eliminated by the set of potential
+  candidates).
+
+    sort input set
+
+    while(there are elements in the input set) {
+      maximumFound = -1;
+      for each element i in the input set
+         smallerElements = find the number of smaller permutations before the one
+                           starting with i
+         maximumFound = max(maximumFound, smallerElements) - make sure this fits into
+                        the given rank
+
+      solution += add i corresponding to the maximumFound
+      delete i from the input set
+    }
 
 The code to calculate ranking and unranking for permutations follows
 
@@ -317,7 +345,8 @@ int getRankForPermutation(const vector<int>& v) {
 vector<int> unrankPermutation(vector<int> vec, int rank) {
 
   sort(vec.begin(), vec.end()); // Sort the input set so that we have each index
-                                // telling us how many elements are there less than it
+                                // telling us how many elements are there less
+                                // than it
 
   int remainingIndex = rank;
   vector<int> solution;
@@ -330,15 +359,18 @@ vector<int> unrankPermutation(vector<int> vec, int rank) {
       int previousPermutations = i * factorial(static_cast<int>(vec.size()) - 1);
 
       // The important check here is whether the previous permutations fit into the
-      // rank we were given. Notice that the remaining index might even be zero. In that
-      // case we just position the last elements of the permutation.
-      if (previousPermutations > maximumFound && previousPermutations <= remainingIndex)
+      // rank we were given. Notice that the remaining index might even be zero.
+      // In that case we just position the last elements of the permutation.
+      if (previousPermutations > maximumFound &&
+          previousPermutations <= remainingIndex)
         maximumFound = previousPermutations;
-      else if (previousPermutations > remainingIndex) { // We're not allowed to exceed the rank
+      else if (previousPermutations > remainingIndex) { // We're not allowed to
+                                                        // exceed the rank
         break;
       }
     }
-    --i; // i was the solution either if we found a maximum or we terminated our variables
+    // i was the solution either if we found a maximum or we terminated our variables
+    --i;
 
     solution.push_back(vec[i]);
     remainingIndex -= maximumFound;
