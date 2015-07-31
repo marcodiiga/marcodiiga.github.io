@@ -218,7 +218,7 @@ and since we're searching for the point for which \\( f(x) = x^2 - S = 0 \\), we
 
 $$x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}=x_n-\frac{x_n^2-S}{2x_n}=\frac{1}{2}\left(x_n+\frac{S}{x_n}\right)$$
 
-This last relation is the so-called [Babylonian method](https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method)
+This last recursion is the so-called [Babylonian method](https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method)
 which basically consists of a first-time approximation for \\( x \\) (the closer to the
 real square root, the faster the convergence) and of a recursive relation which ends
 when we're satisfied with the error range (i.e. we're operating in a sufficiently
