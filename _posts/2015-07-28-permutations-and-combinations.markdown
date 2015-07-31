@@ -402,9 +402,8 @@ int main(int argc, char * argv[]) {
 }
 {% endhighlight %}
 
-Complexity for the algorithms: \\( O(n^2) \\). Precomputing or using a table for the factorial
-calculations would reduce the runtime. The code above could also work for duplicate
-characters but it would need some adjustments, in particular:
+Precomputing or using a table for the factorial calculations would reduce the runtime.
+The code above could also work for duplicate characters but it would need some adjustments, in particular:
 
 1. The duplicate characters would have to be included as smaller elements
 
@@ -412,3 +411,252 @@ characters but it would need some adjustments, in particular:
 of that element. This is because duplicates will generate the same permutation
 multiple times (in the same fashion as combinations without repetition need to get
   rid of the duplicates).
+
+Lexicographically sorted combinations
+=====================================
+Generating lexicographically sorted combinations proves to be easier than with
+permutations since for \\( n = 4 \\) and \\( k = 2 \\) we have
+
+$$ 1 2 \\
+1 3 \\
+1 4 \\
+2 3 \\
+2 4 \\
+3 4 $$
+
+and we can think of a recursive algorithm
+
+    generate_combination(set, k, start)
+      for each element i from start to the end of the set
+        store_element i
+        generate_combination(set, k-1, start+1)
+        drop_element i
+
+Code follows
+
+{% highlight c++ %}
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <iterator>
+using namespace std;
+
+void combinationsLexicographically(vector<int>& v, int index, vector<int>& c, int k) {
+  if (k == 0) {
+    copy(c.begin(), c.end(), ostream_iterator<int>(cout, " "));
+    cout << endl;
+    return;
+  }
+
+  for (int i = index; i < v.size(); ++i) {
+    c.push_back(v[i]);
+    combinationsLexicographically(v, i + 1, c, k - 1);
+    c.pop_back();
+  }
+
+}
+
+void combinationsLexicographically(vector<int>& v, int k) {
+  sort(v.begin(), v.end());
+
+  vector<int> combination;
+  for (int i = 0; i < v.size(); ++i) {
+    combination.push_back(v[i]);
+    combinationsLexicographically(v, i + 1, combination, k - 1);
+    combination.pop_back();
+  }
+}
+
+int main(int argc, char * argv[]) {
+
+  vector<int> v = { 1, 2, 3, 4 };
+  int k = 2;
+
+  combinationsLexicographically(v, k);
+
+  return 0;
+}
+{% endhighlight %}
+
+Ranking and unranking combinations
+==================================
+
+While generating lexicographically sorted combination was easier than its permutation
+counterpart, ranking and unranking combinations proves to be considerably more challenging
+since the reasoning we did can no longer be applied.
+
+Before diving into the ranking/unranking algorithms two reminders are needed: the first
+one being the [multiplicative formula](https://en.wikipedia.org/wiki/Binomial_coefficient#Multiplicative_formula)
+for the binomial coefficient calculation. The formula assures that
+
+$$ \binom nk = \prod_{i=1}^k \frac{n+1-i}{i} $$
+
+or, put another way,
+
+$$ \binom {4}{2} = \frac{4 +1-1}{1} \cdot \frac{4 +1-2}{2} = 6$$
+
+In code it becomes
+
+{% highlight c++ %}
+int binomial(int n, int k) {
+  if (n < 0 || k < 0 || k > n) // Exceptional/nonsense cases handling
+    return 0;
+  int b = 1;
+  for (int i = 0; i < k; ++i) {
+    b = b * (n - i) / (i + 1); // Simplified multiplicative formula
+  }
+  return b;
+}
+{% endhighlight %}
+
+A second reminder is needed: the [recursive formula](https://en.wikipedia.org/wiki/Binomial_coefficient#Recursive_formula)
+
+$$ \binom nk = \binom{n-1}{k-1} + \binom{n-1}k $$
+
+In our previous example with \\( n = 4 \\) and \\( k = 2 \\) we had
+
+$$ 1 2 \\
+1 3 \\
+1 4 \\
+2 3 \\
+2 4 \\
+3 4 $$
+
+The first term of the recursive formula corresponds to the first interval of combinations
+starting with 1 and featuring 2,3 and 4 *shuffling*. The rest corresponds to three elements
+(every other element except 1 which has been already done) *shuffling* with \\( k=2 \\).
+The process restarts recursively. Another consideration to keep in mind is that
+the first lexicographic element is always the first \\( k \\) elements of the set.
+At the end of an interval the first combination is exactly the previous one with every
+element increased by one: \\( {1,2} \dashrightarrow {2,3} \\)
+
+Understanding this reasoning is the key to understanding how ranking works for
+combinations (and also how *k-subsets* are generated). The pseudocode is
+
+    rankThisCombination(combination, n)
+      infer k from the combination's size
+
+      handle special k cases (e.g. n == k)
+
+      if k == 1 just return combination[0]
+
+      for every element in combination
+        --element; // Back out one interval
+      // this is only needed for the final adjustments
+
+      if we reached the first interval (i.e. no other intervals before this one)
+        return rankThisCombination(combination, n-1) // Recurse without the interval
+
+      return binomial(n-1,k-1) /* Skip one interval and continue */
+             + rankThisCombination(combination, n-1)
+
+
+    Unraking works similarly although the code is a bit more involved:
+
+      unrankGetCombination(n, k, rank, start = 1)
+
+        comb = generate first combination from start with k elements
+
+        s = find the biggest smaller interval where our rank fits
+
+        if comb has more than one element
+          // recurse without the first element
+          comb = unrankGetCombination(n - 1, k - 1, rank - s, start = comb[1])
+
+        // If we finished our recursions or comb has one element, either case
+        // just return it. This assumes a [1;n] input array
+        return comb
+
+The previous considerations assume a \\( [1;n] \\) interval input set although the
+same considerations can be applied to any input set.
+
+The complete code for ranking and unranking combinations is the following
+
+{% highlight c++ %}
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <iterator>
+using namespace std;
+
+int binomial(int n, int k) {
+  if (n < 0 || k < 0 || k > n)
+    return 0;
+  int b = 1;
+  for (int i = 0; i < k; ++i) {
+    b = b * (n - i) / (i + 1); // Multiplicative formula
+  }
+  return b;
+}
+
+int getRankForCombination(int n, vector<int> comb) {
+
+  int k = static_cast<int>(comb.size());
+  if (k == 0 || k == n)
+    return 0;
+
+  for (auto& c : comb)
+    --c;
+
+  int j = comb[0];
+  if (k == 1) // This assumes an input set from [1;n]
+    return j;
+
+  if (j == 0) {
+    vector<int> sp(comb.size() - 1);
+    copy(comb.begin() + 1, comb.end(), sp.begin());
+    return getRankForCombination(n - 1, sp);
+  }
+
+  return binomial(n - 1, k - 1) + getRankForCombination(n - 1, comb);
+}
+
+vector<int> unrankGetCombination(int n, int k, int rank, int start = 1) {
+
+  vector<int> comb(k);
+  for (int i = 0; i < k; ++i){
+    comb[i] = i + start;
+  }
+
+  int s = 0;
+  int currentN = n - 1;
+  int newS = binomial(currentN, k - 1);
+  while (newS <= rank) {
+    s = newS;
+    for (auto& c : comb)
+      ++c;
+    newS += binomial(--currentN, k - 1);
+  }
+
+  if (comb.size() > 1) {
+    vector<int> rest = unrankGetCombination(n - 1, k - 1, rank - s, comb[1]);
+    for (int i = 0; i < rest.size(); ++i) {
+      comb[i + 1] = rest[i];
+    }
+  }
+
+  return comb;
+}
+
+int main(int argc, char * argv[]) {
+
+  const int N = 4; // {1,2,3,4}
+  const int K = 2;
+  vector<int> combination = { 3, 4 };
+  int rank;
+
+  cout << "~-~-~-~ Indices are 0-based ~-~-~-~" << endl << endl;
+
+  rank = getRankForCombination(N, combination /*K is deduced from the combination*/);
+  cout << "Rank for combination { ";
+  copy(combination.begin(), combination.end(), ostream_iterator<int>(cout, " "));
+  cout << "} is " << rank << endl << endl; // Rank for combination { 3 4 } is 5
+
+  combination = unrankGetCombination(N, K, rank);
+  cout << "Rank " << rank << " combination is { ";
+  copy(combination.begin(), combination.end(), ostream_iterator<int>(cout, " "));
+  cout << "}" << endl; // Rank 5 combination is { 3 4 }
+
+  return 0;
+}
+{% endhighlight %}
