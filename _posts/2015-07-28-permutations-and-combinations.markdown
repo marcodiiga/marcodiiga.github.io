@@ -551,7 +551,7 @@ combinations (and also how *k-subsets* are generated). The pseudocode is
              + rankThisCombination(combination, n-1)
 
 
-    Unraking works similarly although the code is a bit more involved:
+Unraking works similarly although the code is a bit more involved:
 
       unrankGetCombination(n, k, rank, start = 1)
 
