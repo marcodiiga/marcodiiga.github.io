@@ -27,7 +27,7 @@ int main() {
   vector<int> v = { 1, 2, 3 };
   vector<vector<int>> gcodes(1); // Empty set
 
-  for (int i = 0; i < v.size(); ++i) {
+  for (int i = 0; i < static_cast<int>(v.size()); ++i) {
     vector<vector<int>> newElements;
     for (decltype(gcodes)::reverse_iterator it = gcodes.rbegin();
          it != gcodes.rend(); ++it) {
