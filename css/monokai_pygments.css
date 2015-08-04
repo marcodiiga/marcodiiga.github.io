@@ -1,0 +1,12 @@
+/* Adjusted to give override background and text colour */
+.highlight pre, pre, .highlight .hll, code {
+    font-family: Consolas,"Liberation Mono",Courier,monospace;
+    font-weight: normal;
+    font-size: 16px;
+    background-color: #23241f;
+    border: 1px solid #dfdfdf;
+    padding: 6px 10px;
+    border-radius: 3px;
+    color: #f8f8f2;
+    overflow-x: auto;
+}

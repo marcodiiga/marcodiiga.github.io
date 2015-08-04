@@ -64,6 +64,4 @@ unsigned int tripCounter(const Subway& subway, int destination, int nSteps)
 {% endhighlight %}
 
 The algorithm assumes an [adjacency matrix](https://en.wikipedia.org/wiki/Adjacency_matrix)
-to store the subway graph. The usual disclaimer applies: *don't use this code as production
-code*, the algorithms are hereby provided as explanation tools and lack optimizations / error
-handling.
+to store the subway graph.

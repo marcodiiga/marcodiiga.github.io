@@ -1,6 +1,6 @@
 digraph G {
   layout="neato"
-  node [fontname = "helvetica"];
+  node [fontname = "consolas"];
   1[label="  {  }  ", pos="2.5,3!"];
   2[label="  {1}  ", pos="3.5, 2.5!"];
   3[label=" {1,2} ", pos="3.5, 1.5!"];

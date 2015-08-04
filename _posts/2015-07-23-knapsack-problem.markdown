@@ -14,7 +14,7 @@ s.t. \
 
 A less mathematical but more intuitive explanation:
 
-> Imagine a burglar robbing a house with a sack of limited capacity: he must choose
+> Imagine a [burglar](lol) robbing a house with a sack of limited capacity: he must choose
 the items to steal in order to maximize his profit.
 
 It has to be noted that a greedy algorithm would not work for most of the cases of
