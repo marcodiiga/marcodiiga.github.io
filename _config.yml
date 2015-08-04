@@ -3,6 +3,7 @@ title: Marco << 0xC0FFEE;
 description: Programming thoughts of a Software Engineer
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://marcodiiga.github.io" # the base hostname & protocol for your site
+permalink: /:title
 github:  marcodiiga
 stackoverflow: 1938163
 googleplus: MarcoAlesiani
