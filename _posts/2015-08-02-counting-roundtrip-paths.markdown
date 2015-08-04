@@ -11,7 +11,7 @@ and *N* is the number of nodes in a graph.
 
 As noted on the post given a sample graph
 
-![graph](http://i.imgur.com/z7W9pP2.png)
+![graph](/images/posts/countingroundtrip.png)
 
 and setting \\( k = 5 \\) yields a total of 6 possible roundtrip paths from the origin
 node
