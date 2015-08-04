@@ -73,3 +73,6 @@ class CFamilyLexer(RegexLexer):
 This gets Pygments to do the right thing when parsing C++ include directives.
 
 ![include after](/images/posts/enhancingpygments2.png)
+
+However it has to be noted that this only works when an 'enhanced' version of
+Pygments is used to generate a static site.
