@@ -70,10 +70,6 @@ class CFamilyLexer(RegexLexer):
 	...
 {% endhighlight %}
 
-This gets Pygments to do the right thing when parsing C++ include directives
+This gets Pygments to do the right thing when parsing C++ include directives.
 
-{% highlight c++ %}
-#include <iostream>
-#include <vector>
-#include "somepath/somefile.h"
-{% endhighlight %}
+![include after](/images/posts/enhancingpygments2.png)
