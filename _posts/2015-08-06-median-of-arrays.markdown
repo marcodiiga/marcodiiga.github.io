@@ -322,3 +322,8 @@ int main() {
 {% endhighlight %}
 
 Complexity is \\( O(\log{m} + \log{n}) \\) where \\( m,n \\) are the lengths of the vectors.
+
+References
+==========
+
+* [Median of sorted arrays](http://www.geeksforgeeks.org/median-of-two-sorted-arrays-of-different-sizes/)
