@@ -286,3 +286,5 @@ data[node].component = min(data[node].component, data[succ].discoveryTime); // *
 {% endhighlight %}
 
 could also work if the back-edge's component was used in the comparison rather than its discovery time. The reason why the discovery time is used instead it is because the back edge's component value might not have been updated yet to a definitive value. For consistency reasons the `component` field indicates the earliest ancestor that can be reached from a node. Although, as stated, the algorithm would continue to work, the data regarding the individual `component` fields would be unreliable.
+
+The complexity of the algorithm above, since it mainly calls DFS, it's \\( O(V+E) \\) where \\( V \\) is the number of nodes of the graph and \\( E \\) the number of edges.
