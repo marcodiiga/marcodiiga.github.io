@@ -15,7 +15,7 @@ Let's take for instance the following graph
 
 ![image](/images/posts/connectedcomponents1.png)
 
-Since the graph is disconnected, it has subconnected components. The following code finds the connected components of the undirected graph
+Since the graph is disconnected, it has connected subcomponents. The following code finds the connected components of the undirected graph
 
 {% highlight c++ %}
 #include <iostream>
