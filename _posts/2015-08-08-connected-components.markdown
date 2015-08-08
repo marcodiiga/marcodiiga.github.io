@@ -235,9 +235,9 @@ void findStronglyConnectedComponents() {
       data[node].discoveryTime = discoveryTimeGlobal;
       data[node].component = discoveryTimeGlobal;
       ++discoveryTimeGlobal;
-      currentComponent.push(node); // Add it to the current component stack (useful to
-                                   // track back and print the nodes in a component)
-      data[node].onStack = true; // Mark it as on the stack (needed to check for cycles)
+      currentComponent.push(node); // Add it to the current component stack (useful
+                                   // to track back and print the nodes in a component)
+      data[node].onStack = true; // Set it on the stack (needed to check for cycles)
       data[node].visited = true;
 
       for (auto succ : adjacencyList[node]) {
@@ -247,11 +247,13 @@ void findStronglyConnectedComponents() {
           // Grab the minimum found by my child
           data[node].component = min(data[node].component, data[succ].component);
         } else if (data[succ].onStack == true) { // Cycle found
-          data[node].component = min(data[node].component, data[succ].discoveryTime); // *
+          // *
+          data[node].component = min(data[node].component, data[succ].discoveryTime);
         }
       }
 
-      if (data[node].component == data[node].discoveryTime) { // If I'm still the root node
+      // If I'm still the root node
+      if (data[node].component == data[node].discoveryTime) {
         // Generate a SSC with my stack
         cout << "Found SSC with nodes: { ";
         while (currentComponent.top() != node) { // I'm the beginning of this component
