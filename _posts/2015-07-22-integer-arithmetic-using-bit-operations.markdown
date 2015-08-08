@@ -95,7 +95,7 @@ int multiplication(int x, int y) {
   while (y != 0) {
 
     if (y & 0x1)
-      result = result + y;
+      result = result + x;
 
     x <<= 1;
     y >>= 1;
