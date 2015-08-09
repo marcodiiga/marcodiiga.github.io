@@ -22,7 +22,7 @@ vector<set<int>> findAllSubsetsBit(set<int>& s) {
       if (bits & 0x1 == 0x1) {
         auto it = s.begin();
         advance(it, index);
-        sub.insert(sub.end(), *it);
+        sub.insert(*it);
       }
       ++index;
       bits >>= 1;
