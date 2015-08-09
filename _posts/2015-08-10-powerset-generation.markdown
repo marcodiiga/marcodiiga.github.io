@@ -6,7 +6,7 @@ tags: algorithms
 
 In mathematics a [power set](https://en.wikipedia.org/wiki/Power_set) of any set \\( S \\), written \\( \mathcal{P}{(S)} \\) is the set of all subsets of \\( S \\) including the empty set and \\( S \\) itself. The size of the power set for a set \\( S \\) of 3 elements is \\( 2^{3} \\).
 
-The simplest and most intuitive algorithm to generate the power set given a set of elements iteratively loops from 0 to \\( 2^{N}-1 \\) and considers the high bits of the index variable as the elements of a subset.
+The simplest and most intuitive algorithm to generate the power set given a set of elements iteratively loops from 0 to \\( 2^{N}-1 \\) and considers the high bits of the index variable as the elements of a subset. Notice that the following code ignores speedup opportunities like exploiting constant time for `RandomAccessIterator` access to enforce the use of the `set` container.
 
 {% highlight c++ %}
 vector<set<int>> findAllSubsetsBit(set<int>& s) {
