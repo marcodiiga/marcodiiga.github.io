@@ -48,3 +48,5 @@ int main() {
   return 0;
 }
 {% endhighlight %}
+
+For the set of three elements above the algorithm performs a total of \\( 2^0 + 2^1 + 2^2 \\) operations to insert new elements from the previous ones. This yields a \\( O(2^{N-1}) \\) complexity.
