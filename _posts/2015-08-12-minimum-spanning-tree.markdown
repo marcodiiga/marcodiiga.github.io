@@ -320,95 +320,140 @@ The code below features Prim's algorithm on the same graph of the previous parag
 #include <tuple>
 #include <algorithm>
 #include <list>
+#include <map>
 #include <vector>
 #include <limits>
 using namespace std;
+
+template<typename Type, typename ExtraData>
+class MutableMinHeap {
+  vector<tuple<size_t, Type, ExtraData>> data;
+  map<size_t, size_t> positionMap;
+  size_t progressiveIndex = -1;
+public:
+  // Inserts an element leaving the heap in a possibly invalid state
+  // Returns an index that can be used to refer to the same node later
+  size_t insertElementNoHeapify(Type weight, ExtraData extraData) {
+    ++progressiveIndex;
+    data.emplace_back(progressiveIndex, weight, extraData);
+    positionMap[progressiveIndex] = data.size() - 1;
+    return progressiveIndex;
+  }
+  void removeTopElementNoHeapify() {
+    if (data.size() <= 0)
+      throw exception("No elements in the heap");
+    size_t progrId = get<0>(data.front());    
+    swap(positionMap[get<0>(data[0])], positionMap[get<0>(data[data.size() - 1])]);
+    swap(data[0], data[data.size() - 1]);
+    positionMap.erase(progrId);
+    data.resize(data.size() - 1);
+  }
+  void heapify() { // Reheapify through swimDown O(N)
+    size_t currentNode = data.size();
+    while (currentNode > 1) {
+      // Set up indices for parent node and left/right nodes (if they exist)
+      size_t parent = currentNode / 2;
+      size_t left = parent * 2;
+      left = (left <= data.size()) ? left - 1 : -1;
+      size_t right = parent * 2 + 1;
+      right = (right <= data.size()) ? right - 1 : -1;
+      --parent;
+      // Get the minimum in this subtree
+      Type minimum = get<1>(data[parent]);
+      size_t minElement = parent;
+      if (left != -1 && get<1>(data[left]) < minimum)
+        minElement = left;
+      if (right != -1 && get<1>(data[right]) < minimum)
+        minElement = right;
+      if (minElement != parent) { // Swap and update indices
+        swap(data[parent], data[minElement]);
+        size_t s1 = get<0>(data[parent]);
+        size_t s2 = get<0>(data[minElement]);
+        swap(positionMap[s1], positionMap[s2]);
+      }
+      currentNode -= 2;
+    }
+  }
+  tuple<size_t, Type, ExtraData>& getTopElement() {
+    if (data.size() > 0)
+      return data[0];
+    else
+      throw exception("No elements in the heap");
+  }
+  // Access an element in the heap. If the weight is modified, a
+  // reheapify will then be needed
+  tuple<size_t, Type, ExtraData>& accessItem(size_t index) {
+    return data[positionMap[index]];
+  }
+};
+
+struct Edge {
+  int v;
+  int weight;
+};
 
 class Graph {
 public:
   Graph(int V) {
     adjacencyList.resize(V);
     numberOfVertices = V;
+    nodeIndices.resize(V);
+    for (int i = 0; i < numberOfVertices; ++i) {
+      nodeIndices[i] = heap.insertElementNoHeapify(numeric_limits<int>::max(), i);
+      heapIndexToAdjIndex[nodeIndices[i]] = i;
+    }
   }
   void addEdge(int u, int v, int w) {
-    adjacencyList[u].emplace_back(v, w);
+    adjacencyList[u].push_back({ v, w });
   }
 
-  vector<tuple<int,int,int>> getMST() {
-
-    // costToReachNode[0] => {1, 2}
-    // means the minimum cost to reach node 0 is 1 from node 2
-    // costToReachNode[1] => {0, -1}
-    // means 1 is the root node (i.e. cost 0 from no node)
-    vector<pair<int, int>> minCostToReachNode(numberOfVertices, 
-      make_pair(numeric_limits<int>::max(), -1));
+  vector<tuple<int, int, int>> getMST() {
     vector<bool> isNodeInMST(numberOfVertices, false);
-    auto getCheapestVertexNotInMST = [&]() {
-      int minimum = numeric_limits<int>::max();
-      int index = -1;
-      for (int j = 0; j < minCostToReachNode.size(); ++j) {
-        if (minCostToReachNode[j].first < minimum && isNodeInMST[j] == false) {
-          minimum = minCostToReachNode[j].first;
-          index = j;
-        }
-      }
-      return index;
-    };
 
-    // Start vertex, i.e. root of the tree
-    minCostToReachNode[0].first = 0;
+    // Start from root node
+    auto& root = heap.accessItem(nodeIndices[0]);
+    get<1>(root) = 0;
+    get<2>(root) = -1; // No parent
+    heap.heapify();
 
-    vector<tuple<int, int, int>> resultEdges;
+    vector<tuple<int, int, int>> resultEdges; // u,v,w
 
     for (int i = 0; i < numberOfVertices; ++i) {
       // Pick the cheapest node to be reached
-      int u = getCheapestVertexNotInMST();
-      isNodeInMST[u] = true;
+      auto& top = heap.getTopElement();
+
       // Store the path we followed to reach this node
-      resultEdges.emplace_back(minCostToReachNode[u].second, u, 
-                               minCostToReachNode[u].first);
+      int nodeId = heapIndexToAdjIndex[get<0>(top)];
+      int parent = get<2>(top);
+      resultEdges.emplace_back(parent, nodeId, get<1>(top));
+
+      isNodeInMST[nodeId] = true;
+      heap.removeTopElementNoHeapify();      
 
       // Update every node that can be reached from this one
       // if we found a new cheapest cost to reach it
-      for (auto it = adjacencyList[u].begin(); 
-                it != adjacencyList[u].end(); ++it) {
-        if (isNodeInMST[it->first] == false &&
-          it->second < minCostToReachNode[it->first].first) {
-          minCostToReachNode[it->first].first = it->second;
-          minCostToReachNode[it->first].second = u;
+      for (auto it = adjacencyList[nodeId].begin();
+        it != adjacencyList[nodeId].end(); ++it) {
+        if (isNodeInMST[it->v] == false &&
+          it->weight < get<1>(heap.accessItem(nodeIndices[it->v]))) {
+          get<1>(heap.accessItem(nodeIndices[it->v])) = it->weight;
+          get<2>(heap.accessItem(nodeIndices[it->v])) = nodeId;
         }
       }
+      heap.heapify();
     }
 
     return resultEdges;
   }
+  
 
 private:
-  vector<list<pair<int,int>>> adjacencyList;
+  vector<list<Edge>> adjacencyList;
   int numberOfVertices;
+  MutableMinHeap<int, int> heap;
+  vector<size_t> nodeIndices;
+  map<size_t, int> heapIndexToAdjIndex;
 };
-
-
-int main() {
-
-  Graph graph(5);
-  graph.addEdge(0, 1, 10); // u,v,w
-  graph.addEdge(1, 2, 7);
-  graph.addEdge(2, 3, 1);
-  graph.addEdge(3, 4, 22);
-  graph.addEdge(2, 4, 8);
-
-  auto res = graph.getMST();
-  cout << "Found MST with the following edges:" << endl;
-  for (auto& e : res) {
-    if (get<0>(e) == -1)
-      continue; // root null edge
-    cout << "{" << get<0>(e) << ";" << get<1>(e) << "} with weight "
-      << get<2>(e) << endl;
-  }
-
-  return 0;
-}
 {% endhighlight %}
 
 Output
@@ -419,8 +464,9 @@ Output
     {2;3} with weight 1
     {2;4} with weight 8
 
-The above algorithm is \\( O(V^2) \\) but features an optimization spot: a minimum heap with mutable states might be used to achieve \\( E \log{V} \\) performance. The optimized version is not posted since the standard library doesn't feature a mutable priority queue, the code would grow in length and hinder the readability of the MST algorithm.
+The above algorithm uses a mutable minimum heap to achieve \\( O(\log{V}) \\) complexity for a node removal / update. Since the inner loop runs as for a BFS in \\( O(V+E) \\) the overall running time is \\( O((V+E)\log{V}) \\) which, for a connected graph where \\( V = O(E) \\), is \\( O(E \log{V}) \\). The code considerably grew in complexity though.
 
+As a rule of thumb (there are no precise metrics as the best solution is usually to time performances on a *case-to-case* basis) Prim's algorithm should be used when a graph is **dense** with lots of edges (since it mainly operates on vertices through the minimum cut) while Kruskal should be preferred when the graph is **sparse** i.e. with few edges and possibly many nodes.
 
 
 References
