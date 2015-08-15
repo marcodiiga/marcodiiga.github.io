@@ -341,7 +341,7 @@ public:
   }
   void removeTopElementNoHeapify() {
     if (data.size() <= 0)
-      throw exception("No elements in the heap");
+      throw runtime_error("No elements in the heap");
     size_t progrId = get<0>(data.front());    
     swap(positionMap[get<0>(data[0])], positionMap[get<0>(data[data.size() - 1])]);
     swap(data[0], data[data.size() - 1]);
@@ -378,7 +378,7 @@ public:
     if (data.size() > 0)
       return data[0];
     else
-      throw exception("No elements in the heap");
+      throw runtime_error("No elements in the heap");
   }
   // Access an element in the heap. If the weight is modified, a
   // reheapify will then be needed
