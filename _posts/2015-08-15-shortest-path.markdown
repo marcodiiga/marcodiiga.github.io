@@ -4,7 +4,7 @@ title:  "Shortest path"
 tags: algorithms
 ---
 
-[Dijkstra algorith](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) is commonly used to get the shortest path from a starting vertex to an end vertex on a graph with non-negative weights.
+[Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) is commonly used to get the shortest path from a starting vertex to an end vertex on a graph with non-negative weights.
 
 Two sets are maintained at each step: a set of *explored* nodes which have already been visited and a set of *not-yet-visited* nodes whose minimum distance from the start node may change at any time a better path is discovered. If an adjacency list to traverse the graph in \\( O(V+E) \\) is used together with a binary heap to track the minimum of the *not-yet-explored* set in \\( O(\log{V}) \\), the overall is \\( O((E+V)\log{V}) \\).
 
