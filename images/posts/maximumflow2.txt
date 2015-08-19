@@ -1,0 +1,12 @@
+digraph MST {
+  graph [fontsize=10 fontname="Consolas" layout="fdp"];
+
+  1 [pos="0,2!"];
+  2 [pos="0,0!"];
+  3 [pos="2,2!"];
+  4 [pos="2,0!"];
+
+  1 -> 3;
+  1 -> 4;
+  2 -> 4;
+}
