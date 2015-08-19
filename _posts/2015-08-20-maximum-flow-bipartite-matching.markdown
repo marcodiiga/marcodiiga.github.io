@@ -54,18 +54,24 @@ public:
   }
 
   int maximumFlow() { // Edmonds–Karp
+
     int maximumFlow = 0;
-    // Do a BFS to find every path from source to sink
     vector<Edge*> parentEdges(numberOfVertices, nullptr);
     deque<int> bfsQueue;
+
+    // Do a BFS to find every path from source to sink
     bfsQueue.push_back(source);
     while (bfsQueue.empty() == false) {
+
       int current = bfsQueue.front();
       bfsQueue.pop_front();
       for (auto& edge : adjacencyList[current]) {
+
         parentEdges[edge.v] = &edge;
         bfsQueue.push_back(edge.v);
+
         if (edge.v == sink) {
+
           // A path was found from source to sink
           // Find the maximum flow on this path
           int maxFlow = numeric_limits<int>::max();
@@ -74,7 +80,9 @@ public:
             maxFlow = min(maxFlow, parentEdge->weight - parentEdge->flux);
             parentEdge = parentEdges[parentEdge->u];
           }
+
           maximumFlow += maxFlow;
+
           // Augment the entire path
           parentEdge = parentEdges[edge.v];
           while (parentEdge != nullptr) {
@@ -115,7 +123,7 @@ int main() {
 {% endhighlight %}
 
 Bipartite Matching
-==================
+------------------
 
 A [bipartite graph](https://en.wikipedia.org/wiki/Bipartite_graph) is a graph whose vertices can be divided into two independent sets such that every edge \\( (u,v) \\) either \\( u \\) belongs to the first one and \\( v \\) to the second one or vice versa. A bipartite graph satisfies the *graph coloring* condition, i.e. has no odd-length cycles. Bipartite matching is the problem of finding a subgraph in a bipartite graph where no two edges share an endpoint.
 
