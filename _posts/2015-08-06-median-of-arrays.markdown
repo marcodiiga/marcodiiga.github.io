@@ -44,7 +44,7 @@ int getMedian(vIt vstart, vIt vend) {
   if (vecSize <= 0)
     return -1;
   if (vecSize % 2 == 0)
-    return *(vstart + (vecSize / 2 - 1)) + *(vstart + (vecSize / 2) / 2);
+    return *(vstart + (vecSize / 2 - 1)) + *(vstart + (vecSize / 2)) / 2;
   else
     return *(vstart + (vecSize / 2));
 }
