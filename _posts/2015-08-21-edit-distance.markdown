@@ -33,7 +33,7 @@ $$ \begin{bmatrix}
     x_{d1} & x_{m2} & x_{m3} & \dots  & x_{mn}
 \end{bmatrix} $$
 
-we can proceed by iteratively constructing the matrix considering at each step the cost of an insertion, deletion or modification of a character. During the calculation for cell \\( x_{22} \\) for instance, with respect to the abscissa being the *expected* string and the ordinate being the *received* string, the value of cell \\( x_{21} \\) is considered with the addition of a deletion operation, the value of cell \\( x_{12} \\) is considered with the addition of an insertion operation and the value of cell \\( x_{11} \\) is considered with the addition of a modification operation \\( \iff  a_1 \ne b_1 \\).
+we can proceed by iteratively constructing the matrix considering at each step the cost of an insertion, deletion or modification of a character. During the calculation for cell \\( x\_{22} \\) for instance, with respect to the abscissa being the *expected* string and the ordinate being the *received* string, the value of cell \\( x\_{21} \\) is considered with the addition of a deletion operation, the value of cell \\( x\_{12} \\) is considered with the addition of an insertion operation and the value of cell \\( x\_{11} \\) is considered with the addition of a modification operation \\( \iff a\_1 \ne b\_1 \\).
 
 The general mathematical formulation follows: the edit distance between \\( a = a_1\ldots a_n \\) and \\( b = b_1\ldots b_m \\) is given by \\( d_{mn} \\), defined by the recurrence
 
