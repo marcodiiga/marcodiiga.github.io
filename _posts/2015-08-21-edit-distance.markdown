@@ -103,7 +103,7 @@ int main() {
   string str1 = "hectagon";
   string str2 = "etthagon";
 
-  cout << minEditDistanceDP(str1, str2);
+  cout << minEditDistanceDP(str1, str2); // 3
 
   return 0;
 }
