@@ -151,3 +151,9 @@ int main() {
   return 0;
 }
 {% endhighlight %}
+
+
+References
+==========
+- [Geometric algorithms course slides - cs233](http://www.dcs.gla.ac.uk/~pat/52233/slides/Geometry1x1.pdf)
+- [Line segments intersection](http://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/)
