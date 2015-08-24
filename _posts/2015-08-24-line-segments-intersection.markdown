@@ -74,6 +74,7 @@ The code for intersection testing follows
 {% highlight c++ %}
 #include <iostream>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 struct Point {
@@ -93,8 +94,10 @@ int orientation(const Point& p1, const Point& p2, const Point& q1) {
     return (val < 0) ? -1 : 1;
 }
 
+// Returns true if q lies on p1-p2
 bool onSegment(const Point& p1, const Point& p2, const Point& q) {
-  if (p1.x <= q.x && q.x <= p2.x && p1.y <= q.y && q.y <= p2.y)
+  if (min(p1.x, p2.x) <= q.x && q.x <= max(p1.x, p2.x) 
+      && min(p1.y, p2.y) <= q.y && q.y <= max(p1.y, p2.y))
     return true;
   else
     return false;
