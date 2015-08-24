@@ -122,7 +122,7 @@ int main() {
       " - " << pointInPolygon(p, polygon) << endl;
   };
 
-  vector<Point> polygon = { {0,0}, {0,3}, {3,3}, {3,1}, {1,1}, {2,0} };
+  vector<Point> polygon = { {0,0}, {0,3}, {3,3}, {3,1}, {2,1}, {2,0} };
   Point p = { 1,1 };
   printPointInPolygon(p, polygon);
 
