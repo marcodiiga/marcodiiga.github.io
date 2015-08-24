@@ -8,7 +8,7 @@ Known as [Point-In-Polygon](https://en.wikipedia.org/wiki/Point_in_polygon) prob
 
 As a prerequiste for this post, make sure to read [Line segments intersection]({% post_url 2015-08-24-line-segments-intersection %}).
 
-A simple test to check whether a point \\( p=\{x,y\} \\) lies inside a given polygon is to extend one of its dimensions to infinity (e.g. \\( p_{inf} = \\{ +\infty,y \\} \\) ) and do a [line segments intersection]({% post_url 2015-08-24-line-segments-intersection %}) test between \\( \overline{p \ p_{inf}} \\) and each one of the edges of the polygon. If the count of the intersections is odd, the point lies inside the polygon.
+A simple test to check whether a point \\( p=\\{x,y\\} \\) lies inside a given polygon is to extend one of its dimensions to infinity (e.g. \\( p_{inf} = \\{ +\infty,y \\} \\) ) and do a [line segments intersection]({% post_url 2015-08-24-line-segments-intersection %}) test between \\( \overline{p \ p_{inf}} \\) and each one of the edges of the polygon. If the count of the intersections is odd, the point lies inside the polygon.
 
 ![image](/images/posts/pointinpolygonproblem1.png)
 
