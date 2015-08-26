@@ -175,8 +175,8 @@ bool ssp(const vector<int>& v, const int& N) {
   // The line above also took care of the initialization for base
   // cases f(i,0) = 0 and f(0,b) = 0
 
-  for (int b = 1; b <= N; ++b) {
-    for (int i = 1; i <= v.size(); ++i) {
+  for (int i = 1; i <= v.size(); ++i) { // For each subset of elements
+    for (int b = 1; b <= N; ++b) { // For each subcapacity
       int opt1 = m[i - 1][b];
       int opt2 = -1;
       if (b - v[i - 1] >= 0) { // No caching to keep this readable
