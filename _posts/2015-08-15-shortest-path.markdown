@@ -153,7 +153,7 @@ public:
     while (heap.empty() == false) {
       // Get closest point on the fringe
       auto& closest = heap.getTopElement();
-      
+
       if (get<1>(closest) == numeric_limits<int>::max())
         break; // Can't reach any other vertex
 
@@ -162,15 +162,15 @@ public:
 
       // Update any adjacent vertex with a new path
       for (auto& e : adjacencyList[heapIndexToAdjIndex[get<0>(closest)]]) {
-        
-        if (minDist[e.v] > get<1>(closest) + e.weight) {          
+
+        if (minDist[e.v] > get<1>(closest) + e.weight) {
           auto& heapVertex = heap.accessItem(nodeIndices[e.v]);
           get<1>(heapVertex) = get<1>(closest) + e.weight;
           minDist[e.v] = get<1>(closest) + e.weight;
           predecessor[e.v] = heapIndexToAdjIndex[get<0>(closest)];
         }
-      }     
-      
+      }
+
       // Remove it from the queue (i.e. visited)
       heap.removeTopElementNoHeapify();
       heap.heapify();
@@ -181,7 +181,7 @@ public:
     vector<tuple<int, int, int>> resultEdges; // u,v,w
     int cur = endPoint;
     int pred = predecessor[cur];
-    while (pred != startPoint) {
+    while (pred != startPoint && pred != -1) {
       resultEdges.emplace_back(pred, cur, minDist[cur] - minDist[pred]);
       cur = predecessor[cur];
       pred = predecessor[cur];
@@ -214,6 +214,10 @@ int main() {
   graph.setEndPoint(4);
 
   auto res = graph.getSP();
+  if (res.size() == 0 || get<2>(res[0]) == numeric_limits<int>::max()) {
+    cout << "No shortest path exists" << endl;
+    return 0;
+  }
   cout << "Found shortest path from node " << 0 << " to node " << 4 << ":" << endl;
   for (auto& e : res)
     cout << "{" << get<0>(e) << ";" << get<1>(e) << "} with weight "
