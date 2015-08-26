@@ -157,6 +157,9 @@ public:
       if (get<1>(closest) == numeric_limits<int>::max())
         break; // Can't reach any other vertex
 
+      if (get<0>(closest) == endPoint)
+        break; // Found our destination
+
       // Update any adjacent vertex with a new path
       for (auto& e : adjacencyList[heapIndexToAdjIndex[get<0>(closest)]]) {
         
