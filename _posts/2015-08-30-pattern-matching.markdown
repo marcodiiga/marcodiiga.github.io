@@ -141,6 +141,8 @@ int rk(const string& text, const string& pattern) {
 }
 {% endhighlight %}
 
+Rabin-Karp's efficiency depends on the efficient computation of hash values. The example above features a simple [Rabin fingerprint](https://en.wikipedia.org/wiki/Rabin_fingerprint) hash function. Average case is \\( O(n+m) \\). Depending on the hash function used a worst-case of \\( O(nm) \\) might be possible.
+
 Collisions cannot be avoided (although careful tuning might significantly reduce these issues) therefore a string comparison verification is needed once a matching hash is found. The code above works since deleting the first most-significant digit and adding the last least-significant digit in
 
 {% highlight c++ %}
