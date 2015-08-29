@@ -158,8 +158,21 @@ Therefore
 
 $$ ((a \mod k) \cdot k + b) \mod k = (a \cdot k + b) \mod k$$
 
+A programming-related caveat: one should **not** confuse the [modulo operator](https://en.wikipedia.org/wiki/Modulo_operation) with C++'s division remainder `%` operator which abides by the following
+
+    (a / b) * b + a % b == a    (with b != 0)
+
+*[expr.mul]/p4*
+
+> The binary / operator yields the quotient, and the binary % operator yields the remainder from the division
+> of the first expression by the second. If the second operand of / or % is zero the behavior is undefined. For
+> integral operands the / operator yields the algebraic quotient with any fractional part discarded;[...] if the
+> quotient a/b is representable in the type of the result, **(a/b)*b + a%b is equal to a**; otherwise, the behavior
+> of both a/b and a%b is undefined.
+
 References
 ==========
 
 * Dan Gusfield - Algorithms on Strings, Trees and Sequences
-* [Proving modulo equality](http://math.stackexchange.com/q/1413514/260877)
+* [Q1413514 on modulo equality](http://math.stackexchange.com/q/1413514/260877)
+* [The C++ standard](https://isocpp.org/)
