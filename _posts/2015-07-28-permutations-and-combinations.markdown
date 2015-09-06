@@ -182,7 +182,7 @@ void sortedPermutations(vector<int>& v) {
 
     // Find the smallest successor of the found i at its right
     int min = -1;
-    for (int j = i + 1; j < v.size(); ++j) {
+    for (int j = i + 1; j < static_cast<int>(v.size()); ++j) {
       if (v[j] > v[i]) {
         if (min == -1)
           min = j;
@@ -448,7 +448,7 @@ void combinationsLexicographically(vector<int>& v, int index, vector<int>& c, in
     return;
   }
 
-  for (int i = index; i < v.size(); ++i) {
+  for (int i = index; i < static_cast<int>(v.size()); ++i) {
     c.push_back(v[i]);
     combinationsLexicographically(v, i + 1, c, k - 1);
     c.pop_back();
@@ -460,7 +460,7 @@ void combinationsLexicographically(vector<int>& v, int k) {
   sort(v.begin(), v.end());
 
   vector<int> combination;
-  for (int i = 0; i < v.size(); ++i) {
+  for (int i = 0; i < static_cast<int>(v.size()); ++i) {
     combination.push_back(v[i]);
     combinationsLexicographically(v, i + 1, combination, k - 1);
     combination.pop_back();
