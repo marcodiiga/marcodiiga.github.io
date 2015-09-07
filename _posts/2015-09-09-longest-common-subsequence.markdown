@@ -19,7 +19,7 @@ A better *dynamic programming* strategy tries to consider the prefixes of the \\
 
 $$c[i,j] = \begin{cases}
 c[i-1,j-1]  & \text{if x[i] = y[j]} \\[2ex]
-max{c[i,j-1],c[i-1,j]} & \text{otherwise}
+max\{c[i,j-1],c[i-1,j]\} & \text{otherwise}
 \end{cases}$$
 
 The approach described is somewhat similar to the one used in the [edit distance]({% post_url 2015-08-21-edit-distance %}) problem. The code to find the lenght of the LCS follows
