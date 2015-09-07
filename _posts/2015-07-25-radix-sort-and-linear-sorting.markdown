@@ -37,13 +37,19 @@ void countSort(vector<int>& vec) {
   for (auto& v : vec)
     ++counts[v];
 
-  partial_sum(counts.begin(), counts.end(), counts.begin());
+  // A non-stable partial_sum(counts) approach might also be used here
+  int total = 0;
+  for (int i = 0; i < counts.size(); ++i) { // Stable counting sort
+    int oldCount = counts[i];
+    counts[i] = total;
+    total += oldCount;
+  }
 
   vector<int> output(vec.size());
 
   for (auto& v : vec) {
-     output[counts[v] - 1] = v;
-     --counts[v];
+     output[counts[v]] = v;
+     ++counts[v];
   }
 
   vec = std::move(output);
@@ -94,14 +100,18 @@ void countSort(vector<int>& vec, int base, int digit) {
   for (auto v : vec)
     ++counts[static_cast<int>(v / pow(base, digit)) % base];
 
-  partial_sum(counts.begin(), counts.end(), counts.begin());
+  int total = 0;
+  for (int i = 0; i < base; ++i) { // Stable counting sort
+    int oldCount = counts[i];
+    counts[i] = total;
+    total += oldCount;
+  }
 
   vector<int> output(vec.size());
 
-  // Nb. this has to be done in reverse to maintain the algorithm correct and stable
-  for (int i = static_cast<int>(vec.size()) - 1; i >= 0; --i) {
-    output[counts[static_cast<int>(vec[i] / pow(base, digit)) % base] - 1] = vec[i];
-    --counts[static_cast<int>(vec[i] / pow(base, digit)) % base];
+  for (int i = 0; i < static_cast<int>(vec.size()); ++i) {
+     output[counts[static_cast<int>(vec[i] / pow(base, digit)) % base]] = vec[i];
+     ++counts[static_cast<int>(vec[i] / pow(base, digit)) % base];
   }
 
   vec = std::move(output);
@@ -118,7 +128,8 @@ int main() {
 {% endhighlight %}
 
 A word of advice: the sorting performed by counting sort will always be correct
-with the algorithm seen in the first part, anyway radix sort requires traversing
+with the algorithm seen in the first part since it is **stable**. Using a `partial_sum`
+approach might also work but it would require traversing
 the input vector in reverse order when accounting for the position given by the
 `counts` vector. This is necessary for both correctness and radix sort stability.
 
