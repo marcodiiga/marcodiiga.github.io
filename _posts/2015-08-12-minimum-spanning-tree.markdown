@@ -35,7 +35,7 @@ By exploiting a particular data structure called [disjoint set forest](https://e
 
 The `Find` function is used to query the component a node belongs to (or the parent node of a component it belongs to). The `Union` function is used to mark two nodes as belonging in the same component.
 
-The simplest data structure for a disjoint set forest is an array of parent nodes until the root of a component. Anyway if \\( N \\) nodes all belong to the same component and we start for the root node from the last one, it will take \\( O(N) \\) to find it.
+The simplest data structure for a disjoint set forest is an array of parent nodes until the root of a component. Anyway if \\( N \\) nodes all belong to the same component and we search for the root node from the last one, it will take \\( O(N) \\) to find it.
 
 A better data structure is an array of structures which contain the index of the parent node (i.e. the node associated with a component) and the *rank* of the tree rooted at a specific element.
 
