@@ -108,3 +108,8 @@ int main() {
   return 0;
 }
 {% endhighlight %}
+
+References
+==========
+
+* [Brian C. Dean slides @ cs.clemson.edu](http://people.cs.clemson.edu/~bcdean/)
