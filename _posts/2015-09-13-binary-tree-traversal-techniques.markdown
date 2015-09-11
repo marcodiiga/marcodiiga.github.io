@@ -160,6 +160,9 @@ void iterativePostOrderPrint(const unique_ptr<Node>& node) {
 }
 {% endhighlight %}
 
+In-Order Morris traversal
+-------------------------
+
 Another \\( O(n) \\) method of implementing a non-recursive in-order traversal without even using a stack is due to the Morris Traversal algorithm which builds on [threaded binary trees](https://en.wikipedia.org/wiki/Threaded_binary_tree) by agumenting predecessor nodes with right links to their successors in the first phase and removes these links in the second phase. E.g. given the tree
 
 ![image](/images/posts/binarytreetraversaltechniques1.png)
