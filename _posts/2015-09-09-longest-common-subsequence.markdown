@@ -18,7 +18,7 @@ Given the lengths of the input vectors as \\( m \\) and \\( n \\), solving the p
 A better *dynamic programming* strategy tries to consider the prefixes of the \\( x,y \\) input vectors \\( c[i,j] \\). If there's a match at the \\( (i,j) \\) position the previous maximum match is increased, otherwise the best of the two prefixes is taken.
 
 $$c[i,j] = \begin{cases}
-c[i-1,j-1]  & \text{if x[i] = y[j]} \\[2ex]
+c[i-1,j-1]+1  & \text{if x[i] = y[j]} \\[2ex]
 max\{c[i,j-1],c[i-1,j]\} & \text{otherwise}
 \end{cases}$$
 
