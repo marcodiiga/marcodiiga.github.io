@@ -13,7 +13,7 @@ An example follows: given two boxes (\\( w,h,d \\))
 $$ b_1 = \{5,5,1\}, \\
 b_2 = \{4,5,2\} $$
 
-the maximum height is 6 since \\( b_1 \\) can be put on the bottom of \\( b_2 \\). The boxes are rotated to have bases \\( (5x5) \\) and \\( 4x2 \\).
+the maximum height is 6 since \\( b_1 \\) can be put on the bottom of \\( b_2 \\). The boxes are rotated to have bases \\( (5 \times 5) \\) and \\( 4 \times 2 \\).
 
 The mathematical formulation of the dynamic programming solution follows: let \\( H(j,R) \\) be the tallest stack of boxes with \\( j \\) on top with rotation \\( R \\).
 
