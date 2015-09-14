@@ -20,7 +20,7 @@ The mathematical formulation of the dynamic programming solution follows: let \\
 $$  
   H(j,R) = \begin{cases}
            0 & \mbox{if $j=0$} \\[2ex]
-           max_{j<i \ with \ w_i < w_j, d_i < d_j}(H(i,R)+h_j) & \mbox{if$j>0$}
+           max_{j<i \ with \ w_i < w_j, d_i < d_j}(H(i,R)+h_j) & \mbox{if $j>0$}
            \end{cases}
 $$
 
