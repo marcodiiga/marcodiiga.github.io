@@ -31,18 +31,8 @@ $$
 using namespace std;
 
 struct Box {
-  Box() = default;
-  Box(int w, int h, int d) :
-    width(w), height(h), depth(d)
-  {
-    boxId = ++boxIncrementalId; // Uniquely identifies this box
-  }
   int width, height, depth;
-  int boxId;
-  static int boxIncrementalId;
 };
-
-int Box::boxIncrementalId = -1;
 
 int maximumHeightBoxStack(const vector<Box>& boxes) {
   // Generate all meaningful rotations for each box
@@ -86,13 +76,13 @@ int maximumHeightBoxStack(const vector<Box>& boxes) {
       // Three conditions to pile i on top of j:
       //  - j has a bigger base than i
       //  - it is actually convenient to pile i on j than leaving i alone
-      //  - i and j are NOT two rotations of the same box ~ this condition can
-      //    be commented out if the problem were to be allowed multiple instances
-      //    of the same box
+      //  - i and j are NOT two rotations of the same box ~ this condition is
+      //    ALWAYS satisfied since the same box cannot be piled on itself
+      //    since one dimension can be greater than the other but the last one
+      //    will always be equal (and not strictly greater '<') than itself
       if (hasABiggerBase(allRotations[j], allRotations[i]) == true &&
           maximumHeightForTopBox[j] + allRotations[i].height > 
-                                         maximumHeightForTopBox[i] &&
-          allRotations[j].boxId != allRotations[i].boxId) {
+                                         maximumHeightForTopBox[i]) {
         maximumHeightForTopBox[i] = maximumHeightForTopBox[j] + 
                                     allRotations[i].height;
       }
@@ -123,3 +113,5 @@ References
 ==========
 
 * [Handouts fall10 @ csail.mit.edu](http://courses.csail.mit.edu/6.006/fall10/)
+
+Thanks to [Ashar Fuadi](http://fusharblog.com/) for reviewing this post.
