@@ -77,7 +77,7 @@ int maximumHeightBoxStack(const vector<Box>& boxes) {
       //  - j has a bigger base than i
       //  - it is actually convenient to pile i on j than leaving i alone
       //  - i and j are NOT two rotations of the same box ~ this condition is
-      //    ALWAYS satisfied since the same box cannot be piled on itself
+      //    ALWAYS satisfied because the same box cannot be piled on itself
       //    since one dimension can be greater than the other but the last one
       //    will always be equal (and not strictly greater '<') than itself
       if (hasABiggerBase(allRotations[j], allRotations[i]) == true &&
