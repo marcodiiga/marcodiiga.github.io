@@ -190,12 +190,16 @@ $$ \begin{bmatrix}0 & 1 & 0 \\ 3 & 2 & 1 \\ 0 & 0 & 1 \end{bmatrix}
 
 * Odd/even conditional function
 
-If the function behaves differently according to the parity of the argument, e.g. if \\( i \\) is even then \\( f(i) = f(i-1) / 2 \\) otherwise \\( f(i) = 3f(i-1) + 1 \\), it is possible to split the equation into two parts and construct \\( T_{even} \\) and \\( T_{odd} \\)
+If the function behaves differently according to the parity of the argument, e.g. if \\( i \\) is even then \\( f(i) = f(i-1) / 2 \\) otherwise \\( f(i) = 3f(i-1) + 1 \\), it is possible to split the equation into two parts and construct and even and an odd \\( T \\)
 
 $$ \begin{cases} T_{even} F_i = F_{i+1} && \mbox{$i$ is even} \\
 T_{odd} F_i = F_{i+1} && \mbox{$i$ is odd} \end{cases} $$
 
-And \\( T = T_{\mbox{even}} \cdot T_{\mbox{odd}} \\). Therefore we can compute \\( F_N \\) with a single formula
+Furthermore 
+
+$$ T = T_{\mbox{even}} \cdot T_{\mbox{odd}} $$
+
+therefore we can compute \\( F_N \\) with a single formula
 
 $$ \begin{cases} F_N = T^{N/2} F_1 && \mbox{if $N$ is odd} \\
 F_N = T_{odd} T^{(N-1)/2} F_1 && \mbox{otherwise} \end{cases}$$
