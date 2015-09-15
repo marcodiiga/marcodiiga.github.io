@@ -60,7 +60,9 @@ $$ T =  \begin{bmatrix}
         c_K & c_{K-1} & c_{K-2} & c_{K-3} & \cdots & c_{1}
         \end{bmatrix} $$
 
-where last row is a vector \\( \begin{bmatrix} c_K & c_{K-1} & c_{K-2} & c_{K-3} & \cdots & & c_{1} \end{bmatrix} \\).
+where last row is a vector 
+
+$$ \begin{bmatrix} c_K & c_{K-1} & c_{K-2} & c_{K-3} & \cdots & & c_{1} \end{bmatrix} $$
 
 In the Fibonacci sequence
 
@@ -193,7 +195,7 @@ If the function behaves differently according to the parity of the argument, e.g
 $$ \begin{cases} T_{even} F_i = F_{i+1} && \mbox{$i$ is even} \\
 T_{odd} F_i = F_{i+1} && \mbox{$i$ is odd} \end{cases} $$
 
-And \\( T = T_{even} \cdot T_{odd} \\). Therefore we can compute \\( F_N \\) with a single formula
+And \\( T = T_{\mbox{even}} \cdot T_{\mbox{odd}} \\). Therefore we can compute \\( F_N \\) with a single formula
 
 $$ \begin{cases} F_N = T^{N/2} F_1 && \mbox{if $N$ is odd} \\
 F_N = T_{odd} T^{(N-1)/2} F_1 && \mbox{otherwise} \end{cases}$$
