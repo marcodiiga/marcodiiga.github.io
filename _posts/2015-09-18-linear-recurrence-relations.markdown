@@ -77,7 +77,7 @@ $$ F_N = T^{N-1} F_1 $$
 
 which in the Fibonacci case becomes
 
-$$ \begin{bmatrix} 0 & 1 \\ 1 & 1 \end{bmatrix}^{N-1} \begin{bmatrix} 1 & 1 \end{bmatrix} $$
+$$ \begin{bmatrix} 0 & 1 \\ 1 & 1 \end{bmatrix}^{N-1} \begin{bmatrix} 1 \\ 1 \end{bmatrix} $$
 
 To efficiently compute \\( T^{N-1} \\) the most popular method is to use [exponentiation by squaring]({% post_url 2015-07-22-integer-arithmetic-using-bit-operations %}) that does it in \\( O(\log{N}) \\) time. A brief reminder follows
 
@@ -185,8 +185,8 @@ $$ T =  \begin{bmatrix}
 E.g. with \\( f(i) = 2f(i-1) + 3f(i-2) + 5 \\) the matrix is
 
 $$ \begin{bmatrix}0 & 1 & 0 \\ 3 & 2 & 1 \\ 0 & 0 & 1 \end{bmatrix}
-\begin{bmatrix} f(i) & f(i+1) & 5 \end{bmatrix} = 
-\begin{bmatrix} f(i+1) & f(i+2) & 5 \end{bmatrix}$$
+\begin{bmatrix} f(i) \\ f(i+1) \\ 5 \end{bmatrix} = 
+\begin{bmatrix} f(i+1) \\ f(i+2) \\ 5 \end{bmatrix}$$
 
 * Odd/even conditional function
 
