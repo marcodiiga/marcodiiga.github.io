@@ -204,7 +204,7 @@ therefore we can compute \\( F_N \\) with a single formula
 $$ \begin{cases} F_N = T^{N/2} F_1 && \mbox{if $N$ is odd} \\
 F_N = T_{odd} T^{(N-1)/2} F_1 && \mbox{otherwise} \end{cases}$$
 
-Note that \\( T_{even} \\) and \\( T_{odd} \\) must be of the same size so in the example provided \\( f(i) = f(i-1) / 2 \\) must be converted into \\( f(i) = \frac{1}{2}f(i-1) + 0 \\) to look like the odd part. The standard method can then be applied.
+Note that both the odd and even \\( T \\) must be of the same size so in the example provided \\( f(i) = f(i-1) / 2 \\) must be converted into \\( f(i) = \frac{1}{2}f(i-1) + 0 \\) to look like the odd part. The standard method can then be applied.
 
 References
 ======
