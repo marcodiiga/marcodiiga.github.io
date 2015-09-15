@@ -30,7 +30,7 @@ x^y=
      \end{cases}
 $$
 
-Multiplying two matrices together takes \\( O(K^3) \\) time with the standard method so overall is \\( O(K^3 \log{N}) \\).
+Multiplying two matrices together takes \\( O(K^3) \\) time (with \\( K \\) being any of the transformation matrix dimensions) with the standard method so overall is \\( O(K^3 \log{N}) \\).
 
 Putting everything together
 ======
