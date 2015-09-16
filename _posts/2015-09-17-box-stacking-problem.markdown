@@ -24,6 +24,8 @@ $$
            \end{cases}
 $$
 
+Particular attention has to be paid for the rotation code. If the problem allows for any number of rotations along any axis **and** no box can be used more than once (as in the instance above), the rotation has to keep a reference to its originating box. This is not immediately obvious but has to be kept in mind nonetheless (*hint: the problem is better visualized with multiple instances of the same \\( \{ 1,2,3 \} \\) box*).
+
 {% highlight c++ %}
 #include <iostream>
 #include <vector>
@@ -31,23 +33,39 @@ $$
 using namespace std;
 
 struct Box {
+  Box() = default;
+  Box(int w, int h, int d) :
+    width(w), height(h), depth(d)
+  {
+    boxId = ++boxIncrementalId; // Uniquely identifies this box
+  }
   int width, height, depth;
+  int boxId;
+  static int boxIncrementalId;
 };
+
+int Box::boxIncrementalId = -1;
 
 int maximumHeightBoxStack(const vector<Box>& boxes) {
   // Generate all meaningful rotations for each box
-  vector<Box> allRotations(3 * boxes.size());
+  vector<Box> allRotations(6 * boxes.size());
   for (int i = 0; i < boxes.size(); ++i) {
-    allRotations[3 * i] = boxes[i]; // Original
-    allRotations[3 * i + 1] = boxes[i]; // Rotation 1
-    swap(allRotations[3 * i + 1].width, allRotations[3 * i + 1].height);
-    allRotations[3 * i + 2] = boxes[i]; // Rotation 2
-    swap(allRotations[3 * i + 2].height, allRotations[3 * i + 2].depth);
+    allRotations[6 * i] = boxes[i]; // Original
+    allRotations[6 * i + 1] = boxes[i]; // 90 degrees original
+    swap(allRotations[6 * i + 1].width, allRotations[6 * i + 1].depth);
+    allRotations[6 * i + 2] = boxes[i]; // Rotation 1
+    swap(allRotations[6 * i + 2].width, allRotations[6 * i + 2].height);
+    allRotations[6 * i + 3] = allRotations[6 * i + 2]; // 90 degrees rot1
+    swap(allRotations[6 * i + 3].width, allRotations[6 * i + 3].depth);
+    allRotations[6 * i + 4] = boxes[i]; // Rotation 2
+    swap(allRotations[6 * i + 4].height, allRotations[6 * i + 4].depth);
+    allRotations[6 * i + 5] = allRotations[6 * i + 4]; // 90 degrees rot2
+    swap(allRotations[6 * i + 5].width, allRotations[6 * i + 5].depth);
   }
 
   // Sort rotations by base (biggest goes first)
-  sort(allRotations.begin(), allRotations.end(), [](const auto& r1, 
-                                                    const auto& r2) {
+  sort(allRotations.begin(), allRotations.end(), [](const auto& r1,
+    const auto& r2) {
     if (r1.width * r1.depth > r2.width * r2.depth)
       return true;
     else
@@ -76,23 +94,22 @@ int maximumHeightBoxStack(const vector<Box>& boxes) {
       // Three conditions to pile i on top of j:
       //  - j has a bigger base than i
       //  - it is actually convenient to pile i on j than leaving i alone
-      //  - i and j are NOT two rotations of the same box ~ this condition is
-      //    ALWAYS satisfied because the same box cannot be piled on itself
-      //    since one dimension can be greater than the other but the last one
-      //    will always be equal (and not strictly greater '<') than itself
+      //  - i and j are NOT two rotations of the same box ~ this condition can
+      //    be commented out if the problem were to be allowed multiple instances
+      //    of the same box
       if (hasABiggerBase(allRotations[j], allRotations[i]) == true &&
-          maximumHeightForTopBox[j] + allRotations[i].height > 
-                                         maximumHeightForTopBox[i]) {
-        maximumHeightForTopBox[i] = maximumHeightForTopBox[j] + 
-                                    allRotations[i].height;
+        maximumHeightForTopBox[j] + allRotations[i].height > maximumHeightForTopBox[i]
+        && allRotations[j].boxId != allRotations[i].boxId) {
+        maximumHeightForTopBox[i] = maximumHeightForTopBox[j] +
+          allRotations[i].height;
       }
     }
   }
 
   // Find the maximum height and return it
   int max = -1;
-  for_each(maximumHeightForTopBox.begin(), maximumHeightForTopBox.end(), 
-  [&](auto v) {
+  for_each(maximumHeightForTopBox.begin(), maximumHeightForTopBox.end(),
+    [&](auto v) {
     if (max < v)
       max = v;
   });
@@ -101,7 +118,7 @@ int maximumHeightBoxStack(const vector<Box>& boxes) {
 }
 
 int main() {
-  vector<Box> boxes = { {5,5,1}, {4,5,2} };
+  vector<Box> boxes = { { 5,5,1 },{ 4,5,2 } };
   cout << maximumHeightBoxStack(boxes); // 6
   return 0;
 }
@@ -113,5 +130,3 @@ References
 ==========
 
 * [Handouts fall10 @ csail.mit.edu](http://courses.csail.mit.edu/6.006/fall10/)
-
-Thanks to [Ashar Fuadi](http://fusharblog.com/) for reviewing this post.
