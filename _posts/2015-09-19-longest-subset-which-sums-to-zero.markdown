@@ -15,7 +15,7 @@ The general idea is to set up a typical dynamic programming recursion exploring 
 Let \\( d(x) \\) be the maximum length of the subset that sums to \\( x \\) and \\( V \\) be the input sequence of values
 
 $$  
-  d(x+v) = max\{ d(x+v), d(x)+1\} \forall \ v \in V
+  d(x+v) = max\{ d(x+v), d(x)+1\} \qquad \forall \ v \in V
 $$
 
 In pseudocode
