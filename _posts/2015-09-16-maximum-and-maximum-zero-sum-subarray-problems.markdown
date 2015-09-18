@@ -61,7 +61,7 @@ int longestSubarrayZeroSum(vector<int>& vec) {
     // explicit 0-sum cases: a 1-length 0 element or
     // a sum of zero
     if (vec[i] == 0 && max_len == 0)
-      max_len =1;
+      max_len = 1;
     if (sum == 0)
       max_len = i + 1;
 
