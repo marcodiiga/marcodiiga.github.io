@@ -53,8 +53,8 @@ int maximumHeightBoxStack(const vector<Box>& boxes) {
     swap(allRotations[6 * i + 5].width, allRotations[6 * i + 5].depth);
   }
 
-
-  // Sort rotations by base (biggest goes first)
+  // Sort rotations by base (biggest goes first). This avoids checking
+  // against previous boxes to achieve NlogN
   sort(allRotations.begin(), allRotations.end(), [](const auto& r1,
     const auto& r2) {
     if (r1.width * r1.depth > r2.width * r2.depth)
@@ -65,42 +65,85 @@ int maximumHeightBoxStack(const vector<Box>& boxes) {
 
   // Initialize the maximum height with each box on top to its height 
   // (i.e. one box only)
-  vector<int> maximumHeightForTopBox;
-  for_each(allRotations.begin(), allRotations.end(), [&](auto& rot) {
-    maximumHeightForTopBox.push_back(rot.height);
-  });
+  vector<int> topIndexForStackOfBoxes(allRotations.size() + 1, -1);
+  vector<int> predecessorBox(allRotations.size() + 1, -1);
+  // How much can a box width/depth increment and still fit within the chain
+  vector<pair<int, int>> margin(allRotations.size() + 1, make_pair<int, int>(-1, -1)); 
 
-  auto hasABiggerBase = [](const Box& rot1, const Box& rot2) { // Utility function
+  // Utility function
+  //  -1 -> first rotation has a bigger base
+  //   0 -> no winner for all dimensions
+  //   1 -> second rotation has a bigger base
+  auto compareBases = [](const Box& rot1, const Box& rot2) {
     if (rot1.width > rot2.width && rot1.depth > rot2.depth)
-      return true;
+      return -1;
+    else if (rot1.width < rot2.width && rot1.depth < rot2.depth)
+      return 1;
     else
-      return false;
+      return 0;
   };
 
-  // Bottom up calculation for the maximum height with i-th box on top
-  for (int i = 1; i < allRotations.size(); ++i) {
-    // Check previous (bigger) boxes and try to pile them up
-    for (int j = 0; j < i; ++j) {
+  int maximumNumberOfBoxes = 0; // Maximum number of boxes found to pile
+                                // for the maximum height
 
-      // Three conditions to pile i on top of j:
-      //  - j has a bigger base than i
-      //  - it is actually convenient to pile i on j than leaving i alone
-      if (hasABiggerBase(allRotations[j], allRotations[i]) == true &&
-        maximumHeightForTopBox[j] + allRotations[i].height >
-        maximumHeightForTopBox[i]) {
-        maximumHeightForTopBox[i] = maximumHeightForTopBox[j] +
-          allRotations[i].height;
+  // Bottom up calculation for the maximum height with i-th box on top
+  for (int i = 0; i < allRotations.size(); ++i) {
+
+    // Find the longest series of boxes with a box with a greater
+    // base than this one's (where it could fit)
+    int lo = 1;
+    int hi = maximumNumberOfBoxes;
+    bool discardElement = false;
+    while (lo <= hi) {
+      int mid = static_cast<int>(ceil((lo + hi) / 2.0f));
+      const Box& rot1 = allRotations[topIndexForStackOfBoxes[mid]];
+      const Box& rot2 = allRotations[i];
+      int opt = compareBases(rot1, rot2);
+      if (opt == -1)
+        lo = mid + 1;
+      else if (opt == 1)
+        hi = mid - 1;
+      else {
+        lo = mid;
+        // This code allows for box substitution in case a box fits in
+        // the chain in the same position of another but has greater
+        // dimensions (and it still fits the predecessor)
+        if ((rot2.width == rot1.width && rot2.depth > rot1.depth 
+          && (margin[mid].second == -1 || margin[mid].second >= 
+                                          (rot2.depth - rot1.depth))) == false &&
+          (rot2.depth == rot1.depth && rot2.width > rot1.width 
+            && (margin[mid].second == -1 || margin[mid].first >= 
+                                            (rot2.width - rot1.width))) == false)
+          discardElement = true; // Not worth of consideration
+        break; // In both cases break
       }
+    }
+    if (discardElement)
+      continue;
+
+    if (maximumNumberOfBoxes < lo)
+      maximumNumberOfBoxes = lo;
+    predecessorBox[lo] = topIndexForStackOfBoxes[lo - 1];
+    topIndexForStackOfBoxes[lo] = i; // Store the ith element
+
+    if (predecessorBox[lo] != -1) { // Update margins
+      int parentWidth = allRotations[predecessorBox[lo]].width;
+      int parentDepth = allRotations[predecessorBox[lo]].depth;
+      int childWidth = allRotations[topIndexForStackOfBoxes[lo]].width;
+      int childDepth = allRotations[topIndexForStackOfBoxes[lo]].depth;
+      margin[lo].first = parentWidth - 1 - childWidth;
+      margin[lo].second = parentDepth - 1 - childDepth;
     }
   }
 
-  // Find the maximum height and return it
-  int max = -1;
-  for_each(maximumHeightForTopBox.begin(), maximumHeightForTopBox.end(),
-    [&](auto v) {
-    if (max < v)
-      max = v;
-  });
+  // Reconstruct the maximum height and return it
+  int index = topIndexForStackOfBoxes[maximumNumberOfBoxes];
+  int max = 0;
+  while (index != -1) {
+    max += allRotations[index].height;
+    index = predecessorBox[maximumNumberOfBoxes];
+    --maximumNumberOfBoxes;
+  }
 
   return max;
 }
@@ -112,7 +155,7 @@ int main() {
 }
 {% endhighlight %}
 
-Running time is \\( O((n \mid R \mid)^2) \\) but since we kepth \\( R=3 \\), \\( O(n^2) \\).
+Running time is \\( O(n \log n) \\), an easier \\( O(n^2) \\) is also available which doesn't require binary search nor the complex margin-checking code.
 
 References
 ==========
