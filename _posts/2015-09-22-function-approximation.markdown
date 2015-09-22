@@ -34,7 +34,9 @@ Similar calculations would have to be performed if point \\( (x_2;y_2) \\) had b
 
 $$ e_{\overline{14}} = min \left\{ e_{\overline{13}} + e_{\overline{34}}, e_{\overline{12}} + e_{\overline{24}}  \right\} $$
 
-where \\( e_{\overline{12}} = e_{\overline{34}} = 0 \\).
+where 
+
+$$ e_{\overline{12}} = e_{\overline{34}} = 0 $$
 
 {% highlight c++ %}
 #include <iostream>
