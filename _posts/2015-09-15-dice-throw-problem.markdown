@@ -18,15 +18,25 @@ A brute-force method would be to backtrack or generate all the possible permutat
 A faster approach is via dynamic programming. The key observation is that the number of ways a sum can be formed with \\( n \\) dice can be obtained as a function of \\( n-1 \\) dice. Let \\( sum(n,X) \\) be the number of ways a value \\( X \\) can be obtained by launching \\( n \\) dice each with \\( m \\) faces (let's keep \\( m \\) out of the expression for clarity's sake). It follows that
 
 $$ 
-f(2,4) = f(1,3) + f(1,2) + f(1,1) + f(1,0)
+sum(2,4) = sum(1,3) + sum(1,2) + sum(1,1) + sum(1,0)
 $$
 
 The first recursive occurrence considers the \\( n^{th} \\) die as having been extracted with value 1. The second considers it as having been extracted with value 2 and so on. Therefore
 
 $$
 \begin{align}
-f(2,4) & = f(1,3) + f(1,2) + f(1,1) + f(1,0) = \\
-       & = 1 + 1 + 1 + 0 = 3
+sum(2,4) & = sum(1,3) + sum(1,2) + sum(1,1) + sum(1,0) = \\
+         & = 1 + 1 + 1 + 0 = 3
+\end{align}
+$$
+
+and also
+
+$$
+\begin{align}
+sum(3,4) & = sum(2,3) + sum(2,2) + sum(2,1) + sum(2,0) \\
+sum(2,3) & = sum(1,2) + sum(1,1) + sum(1,0) \\
+\cdots
 \end{align}
 $$
 
@@ -48,7 +58,7 @@ int countDiceWays(const int m, const int n, const int X) {
   }
 
   for (int d = 2; d <= n; ++d) {
-    int X_left = X - n + d;
+    int X_left = X - (n + d);
     for (int to_x = 1; to_x <= X_left; ++to_x) {
       int nSums = 0;
       for (int x = 1; x < to_x; ++x) { // -1 current dice
