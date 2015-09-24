@@ -255,7 +255,7 @@ int quickSelect(vector<int>& vec, int left, int right, int k) {
   auto findMedian = [](vector<pair<int, int>>& subgroup) {
     sort(subgroup.begin(), subgroup.end(), [](const pair<int, int>& a, 
                                               const pair<int, int>& b) {
-      return a.first < a.second;
+      return a.first < b.first;
     });
     return subgroup[subgroup.size() / 2].second;
   };
