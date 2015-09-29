@@ -32,7 +32,7 @@ $$
 #include <cassert>
 using namespace std;
 
-// Finds the length of the longest increasing subsequence in O(
+// Finds the length of the longest increasing subsequence in O(NlogN)
 int longestIncreasingSubsequence(vector<int>& vec) {
 
   // Notice: this code assumes no duplicates
