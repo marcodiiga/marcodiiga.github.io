@@ -17,7 +17,7 @@ An example is worth a thousand words:
     input:   ")(()())("
     output:  6
 
-This problem exhibit similarities with the [the maximum subarray problem]({% post_url 2015-09-16-maximum-and-maximum-zero-sum-subarray-problems %}) although it **does** require a history to check for the continuation of the current valid subexpression. A stack is the natural data structure to be used to track the previous expression openings. The breakpoint of a contiguous subexpression is a closing parenthesis `)` with no pending `(` on the stack.
+This problem exhibits similarities with the [the maximum subarray problem]({% post_url 2015-09-16-maximum-and-maximum-zero-sum-subarray-problems %}) although it **does** require a history to check for the continuation of the current valid subexpression. A stack is the natural data structure to be used to track the previous expression openings. The breakpoint of a contiguous subexpression is a closing parenthesis `)` with no pending `(` on the stack.
 
 The algorithm is quite simple and runs in \\( O(N) \\)
 
