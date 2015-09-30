@@ -42,7 +42,7 @@ ostream& operator<<(ostream& os, const Point& p) {
 ostream& operator<<(ostream& os, const vector<Point>& p) {
   os << "{";
   copy(p.begin(), p.end(), ostream_iterator<Point>(os));
-  os  << "}";
+  os << "}";
   return os;
 }
 
@@ -96,7 +96,7 @@ bool pointInPolygon(const Point& p, const vector<Point>& polygon) {
 
   int intersectionsCount = 0;
   int i = 0, j = i + 1;
-  while (j != 0) {
+  do {
 
     if (intersectionTest(p, PtoInfinity, polygon[i], polygon[j]) == true) {
 
@@ -105,12 +105,30 @@ bool pointInPolygon(const Point& p, const vector<Point>& polygon) {
       if (orientation(polygon[i], polygon[j], p) == 0) { // Collinear
         if (onSegment(polygon[i], polygon[j], p) == true)
           return true;
+        else {
+          // Exception case when point is collinear but not on segment
+          // e.g.
+          //           *  ************
+          //             /            \
+          //            k              w
+          // The collinear segment is worth 0 if k and w have the same
+          // vertical direction
+
+          int k = (((i - 1) >= 0) ? // Negative wraparound
+            (i - 1) % static_cast<int>(polygon.size()) : 
+            static_cast<int>(polygon.size()) + (i - 1));
+          int w = ((j + 1) % polygon.size());
+
+          if (polygon[k].y <= polygon[i].y && polygon[w].y <= polygon[j].y)
+            --intersectionsCount;
+        }
       }
     }
 
     i = (++i % polygon.size());
-    j = (++j % polygon.size());;
-  }
+    j = (++j % polygon.size());
+
+  } while (i != 0);
 
   return (intersectionsCount % 2 != 0);
 }
@@ -122,7 +140,7 @@ int main() {
       " - " << pointInPolygon(p, polygon) << endl;
   };
 
-  vector<Point> polygon = { {0,0}, {0,3}, {3,3}, {3,1}, {2,1}, {2,0} };
+  vector<Point> polygon = { { 0,0 },{ 0,3 },{ 3,3 },{ 3,1 },{ 2,1 },{ 2,0 } };
   Point p = { 1,1 };
   printPointInPolygon(p, polygon);
 
