@@ -11,7 +11,9 @@ An example trace
 
 As an example the following is not a bitonic tour
 ![image](/images/posts/bitonictour1.png)
+
 while the following is
+
 ![image](/images/posts/bitonictour2.png)
 
 It is defined as the *optimal bitonic tour* the minimum-length path which forms a bitonic tour. The best bitonic tour also minimizes the horizontal motion while covering all of the vertices in the set. Let us consider for instance the following set of points in a 2D Cartesian coordinates space
@@ -100,7 +102,7 @@ The approach described above is well suited to being implemented with a dynamic 
 $$
 BD(i,j) = 
     \begin{cases}                
-                \min{0 \le k \lt i}\{BD(k,i) f(k,j)\} & \mbox{if $i - j \le 1$} \\
+                \min_{0 \le k \lt i}\{BD(k,i) + \overline{p_k,p_j}\} & \mbox{if $i - j \le 1$} \\
                 BD(i,j-1) + \overline{p_{j-1} p_j} & \mbox{else} \\
      \end{cases} \\
 $$
@@ -119,7 +121,6 @@ struct Point {
 };
 
 float bitonicTourCost(vector<Point> points) {
-
   const size_t N = points.size();
 
   // Sort the points by increasing x coordinates
@@ -131,14 +132,16 @@ float bitonicTourCost(vector<Point> points) {
   });
 
   auto euclideanDistance = [&](int a, int b) {
-    return sqrt(pow(points[a].x - points[b].x, 2) + pow(points[a].y - points[b].y, 2));
+    return sqrt(pow(points[a].x - points[b].x, 2) + 
+                pow(points[a].y - points[b].y, 2));
   };
 
   // Adjacency matrix for bitonic distances between points
   vector<vector<float>> bitonicDistances(N, vector<float>(N, -1));
   bitonicDistances[0][0] = 0;
   for (int i = 1; i < N; ++i)
-    bitonicDistances[0][i] = bitonicDistances[0][i-1] + euclideanDistance(i - 1, i);
+    bitonicDistances[0][i] = 
+                      bitonicDistances[0][i-1] + euclideanDistance(i - 1, i);
 
   for (int i = 1; i < N; ++i) {
     for (int j = i; j < N; ++j) {
@@ -150,7 +153,8 @@ float bitonicTourCost(vector<Point> points) {
         }
         bitonicDistances[i][j] = minimum;
       } else {
-        bitonicDistances[i][j] = bitonicDistances[i][j - 1] + euclideanDistance(j - 1, j);
+        bitonicDistances[i][j] = 
+                      bitonicDistances[i][j - 1] + euclideanDistance(j - 1, j);
       }
     }
   }
