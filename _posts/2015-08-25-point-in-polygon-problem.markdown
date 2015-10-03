@@ -119,7 +119,8 @@ bool pointInPolygon(const Point& p, const vector<Point>& polygon) {
             static_cast<int>(polygon.size()) + (i - 1));
           int w = ((j + 1) % polygon.size());
 
-          if (polygon[k].y <= polygon[i].y && polygon[w].y <= polygon[j].y)
+          if ((polygon[k].y <= polygon[i].y && polygon[w].y <= polygon[j].y)
+          	|| (polygon[k].y >= polygon[i].y && polygon[w].y >= polygon[j].y))
             --intersectionsCount;
         }
       }
