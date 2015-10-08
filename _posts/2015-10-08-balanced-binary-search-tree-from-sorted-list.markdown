@@ -8,6 +8,8 @@ tags: algorithms
 
 Iteratively extracting every single element from the list/array and inserting it into a balanced binary search tree implementation (e.g. [red/black trees](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree)) won't work since it's \\( O(N \log{N}) \\). A better solution would be to recursively create the left and right subtrees from the bottom up and inserting the subtrees' roots each time by advancing a single pointer in the list.
 
+The algorithm that will be presented might come in handy also to solve problems like joining balanced binary search trees in \\( O(n+m) \\) since one could do an [in-order traversal]({% post_url 2015-09-13-binary-tree-traversal-techniques %}) of the first and second tree and store the results in two arrays, then combine the two sorted arrays (\\( O(n+m) \\)) and finally use this algorithm to generate a balanced binary search tree in \\( O(n+m) \\) yielding a grand total of \\( O(n+m) \\) as requested.
+
 Pseudocode and code follow
 
     recursiveCreateBST(pointer_to_first_element, number_of_nodes_in_the_tree)
@@ -114,4 +116,3 @@ $$ \quad f(n) \in O\left( n^{\log_b a - \varepsilon} \right) $$
 $$ \quad T(n) \in \Theta\left( n^{\log_b a} \right) $$
 
 and the algorithm is \\( O(n) \\) as expected.
-
