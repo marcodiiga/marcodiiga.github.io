@@ -21,7 +21,7 @@ and this can be computed in \\( O(n) \\) where \\( n \\) is the number of iterat
 {% highlight c++ %}
 #include<iostream>
 
-template<unsigned long long Iteration>
+template <unsigned long long Iteration>
 struct pi_calculator {
   static constexpr double value() {
     return (4.0 * ((Iteration % 2 == 0) ? 1.0 : -1.0) / (2.0 * Iteration + 1.0))
@@ -29,7 +29,7 @@ struct pi_calculator {
   }
 };
 
-template<>
+template <>
 struct pi_calculator<0> {
   static constexpr double value() {
     return 4.0;
