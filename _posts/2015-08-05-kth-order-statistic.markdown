@@ -233,7 +233,7 @@ int partition(vector<int>& vec, int left, int right, int pivot) {
   pivot = left;
   int i = left;
   int j = right + 1;
-  
+
   while (i < j) {
     while (++i < j && vec[i] < vec[pivot]);
     while (--j >= i && vec[j] >= vec[pivot]); // Beware: tricky indices
@@ -252,31 +252,35 @@ int quickSelect(vector<int>& vec, int left, int right, int k) {
 
   // Calculate the median of medians and return its index in the original vector
   const int N = right - left + 1;
-  auto findMedian = [](vector<pair<int, int>>& subgroup) {
-    sort(subgroup.begin(), subgroup.end(), [](const pair<int, int>& a, 
-                                              const pair<int, int>& b) {
-      return a.first < b.first;
-    });
-    return subgroup[subgroup.size() / 2].second;
+  auto findMedian = [](vector<int>& subgroup) {
+    sort(subgroup.begin(), subgroup.end());
+    return subgroup[subgroup.size() / 2];
   };
   vector<int> medians;
   for (int i = 0; i < (N + 4) / 5; ++i) {
     int elements = 5;
     if (i * 5 + 5 > N)
       elements = N % 5;
-    // First is value, second is index into the original vector
-    vector<pair<int, int>> subgroup;
-    for (auto it = vec.begin() + left + i * 5; 
-         it != vec.begin() + left + i * 5 + elements; ++it)
-      subgroup.emplace_back(*it, static_cast<int>(distance(vec.begin(), it)));
+    vector<int> subgroup;
+    for (auto it = vec.begin() + left + i * 5;
+    it != vec.begin() + left + i * 5 + elements; ++it)
+      subgroup.emplace_back(*it);
     medians.push_back(findMedian(subgroup));
   }
   // Now find the median of medians via quickselect
   int medianOfMedians = (medians.size() == 1) ? medians[0] :
-    quickSelect(medians, 0, static_cast<int>(medians.size() - 1), 
-                static_cast<int>(medians.size() / 2));
-  
-  int pivot = medianOfMedians; // Use it as a pivot
+    quickSelect(medians, 0, static_cast<int>(medians.size() - 1),
+      static_cast<int>(medians.size() / 2));
+  // Find its original index
+  int medianOfMediansIndex;
+  for (int i = 0; i < vec.size(); ++i) {
+    if (vec[i] == medianOfMedians) {
+      medianOfMediansIndex = static_cast<int>(i);
+      break;
+    }
+  }
+
+  int pivot = medianOfMediansIndex; // Use it as a pivot
   int mid = partition(vec, left, right, pivot);
 
   if (k - 1 == mid)
