@@ -16,7 +16,7 @@ Things change if we need to find the median of two arrays. The naive solution is
 
 A simple merging of the two arrays (in a fashion similar to how mergesort works in the merging phase) would be \\( O(n) \\) and it would prove to be considerably easier to implement than many of the \\( O(n) \\) techniques for *kth* order statistic.
 
-Anyway one could do even better by exploiting the following observation: the median element has the same number of elements at its right and left. If the arrays have the same size and are sorted, e.g.
+A better approach consists in exploiting the following observation: the median element has the same number of elements at its right and left. If the arrays have the same size and are sorted, e.g.
 
 $$ A = \{1,2,3\} \\
 B = \{4,5,6\}$$
