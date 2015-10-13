@@ -53,18 +53,17 @@ int countDiceWays(const int m, const int n, const int X) {
 
   // Initialize base case with 1 dice. X might be more than
   // the maximum number reachable with the faces
-  for (int x = 1; x <= min(m,X); ++x) {
+  for (int x = 1; x <= min(m, X); ++x) {
     ++sums[1][x];
   }
 
   for (int d = 2; d <= n; ++d) {
-    int X_left = X - (n + d);
-    for (int to_x = 1; to_x <= X_left; ++to_x) {
+    for (int to_X = 1; to_X <= X; ++to_X) {
       int nSums = 0;
-      for (int x = 1; x < to_x; ++x) { // -1 current dice
-        nSums += sums[d - 1][x];
+      for (int x = 1; x <= m && to_X - x >= 0; ++x) {
+        nSums += sums[d - 1][to_X - x];
       }
-      sums[d][to_x] = nSums;
+      sums[d][to_X] = nSums;
     }
   }
 
