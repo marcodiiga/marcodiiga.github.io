@@ -36,21 +36,21 @@ However a dynamic programming approach is available since the problem exhibits o
 using namespace std;
 
 int minJumps(const vector<int>& vec) {
-  vector<int> jumpsFrom0(vec.size(), 0);
+  // All states are unreachable at the beginning
+  vector<int> jumpsFrom0ToReach(vec.size(), numeric_limits<int>::max());
   
-  jumpsFrom0[0] = 0; // Base case
+  jumpsFrom0ToReach[0] = 0; // Base case
 
-  for (int i = 1; i < vec.size(); ++i) {
-    jumpsFrom0[i] = numeric_limits<int>::max(); // Unreachable
-    for (int j = 0; j < i; ++j) {
-      if (jumpsFrom0[j] != -1 && // Can be reached
-          j + vec[j] >= i) {     // Can reach/surpass i
-        jumpsFrom0[i] = min(jumpsFrom0[i], jumpsFrom0[j] + 1);
+  for (int i = 1; i < vec.size(); ++i) { // For each substate
+    for (int j = 0; j < i; ++j) { // For each state before i-substate
+      if (jumpsFrom0ToReach[j] != numeric_limits<int>::max() && // Can be reached
+          j + vec[j] >= i) { // Can reach/surpass i
+        jumpsFrom0ToReach[i] = min(jumpsFrom0ToReach[i], jumpsFrom0ToReach[j] + 1);
       }
     }
   }
 
-  return jumpsFrom0.back();
+  return jumpsFrom0ToReach.back();
 }
 
 int main() {
