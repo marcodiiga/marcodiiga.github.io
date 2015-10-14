@@ -131,8 +131,8 @@ int rk(const string& text, const string& pattern) {
     return 0;
 
   for (int i = 1; i + (pattern.size() - 1) < text.size(); ++i) {
-    runningHash = (runningHash - text[i - 1] * (k * pattern.size() - 1)) % k;
-    runningHash = ((runningHash * k) + text[i + pattern.size() - 1]) % k;
+    runningHash = (runningHash - text[i - 1] * (k * (pattern.size() - 1))) % k;
+    runningHash = ((runningHash * k) + text[i + (pattern.size() - 1)]) % k;
     if (checkMatch(i, runningHash))
       return i;
   }
@@ -146,8 +146,8 @@ Rabin-Karp's efficiency depends on the efficient computation of hash values. The
 Collisions cannot be avoided (although careful tuning might significantly reduce these issues) therefore a string comparison verification is needed once a matching hash is found. The code above works since deleting the first most-significant digit and adding the last least-significant digit in
 
 {% highlight c++ %}
-runningHash = (runningHash - text[i - 1] * (k * pattern.size() - 1)) % k;
-runningHash = ((runningHash * k) + text[i + pattern.size() - 1]) % k;
+runningHash = (runningHash - text[i - 1] * (k * (pattern.size() - 1))) % k;
+runningHash = ((runningHash * k) + text[i + (pattern.size() - 1)]) % k;
 {% endhighlight %}
 
 ensures the hash can still be compared to the stored pattern one. Given \\( a \mod k = r \\) and \\( a = kq + r \\) where \\( q \\) is the quotient, it holds
