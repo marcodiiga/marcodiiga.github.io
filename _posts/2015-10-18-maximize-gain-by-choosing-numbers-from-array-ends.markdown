@@ -30,7 +30,15 @@ again two things can happen
 
 Since each player has one goal: to score more than his opponent, it can't happen that a player grabs a value randomly or inefficiently.
 
-Let us denote with \\( f_{max}(i,j) \\) the maximum we can score if it's our turn in the subinterval \\( [i,j] \\) of the array and with \\( g_{max}(i,j) \\) the maximum we can score if it's not our turn in the same interval. Let us also denote with \\( v_i \\) the \\( i^{th} \\) element in the array. It follows that
+Let us denote with
+
+$$ f_{max}(i,j) $$
+
+the maximum we can score if it's our turn in the subinterval \\( [i,j] \\) of the array and with 
+
+$$ g_{max}(i,j) $$
+
+the maximum we can score if it's not our turn in the same interval. Let us also denote with \\( v_i \\) the \\( i^{th} \\) element in the array. It follows that
 
 $$ f_{max}(i,j) = \max\{ v_i + g_{max}(i+1,j), v_j + g_{max}(i,j-1) \} \\ 
    g_{max}(i,j) = \min\{ f_{max}(i+1, j), f_{max}(i, j-1) \} $$
