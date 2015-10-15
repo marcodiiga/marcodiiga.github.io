@@ -98,4 +98,4 @@ The code computes the optimal maximum score in \\( O(N\log{N}) \\). The answer t
 
 > Does the player who plays first always win?
 
-is **no** since in the example provided two scores are returned: `47` and `101`. The first one is the score that we can reach if we start the game while the second is the score we can reach if our opponent starts. In the case above the second who plays with an optimal-seeking strategy always wins.
+is **no** since in the example provided two scores are returned: `47` and `101`. The first one is the score that we can reach if we start the game while the second is the score we can reach if our opponent starts. In the case above the second who plays with an optimal-seeking strategy always wins. Anyway to disprove the statement it would have sufficed to think of the case when an even-sized array of same elements is given: the players will score the same.
