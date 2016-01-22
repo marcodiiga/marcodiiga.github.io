@@ -5,7 +5,7 @@ tags: algorithms computer-vision image-processing
 ---
 
 Back in the days when OpenGL ES 2.0 was the only viable way to perform efficient GPGPU computations on mobile devices, one
-might often need to pack and unpack a full single precision floating point value from/to a shader's output/input.
+might often need to pack and unpack a full single precision floating point value in the range \\( [0;1] \\) from/to a shader's output/input.
 
 The following GLSL shader code does the trick
 
@@ -26,8 +26,8 @@ float unpackFloatFromVec4i(const vec4 value) {
 
 but the interesting part is delving into why it works.
 
-Decomposing IEEE 754 floats
-===========================
+Decomposing IEEE 754 floats in the range [0;1]
+==============================================
 
 In [IEEE 754](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) single precision floating point numbers
 are represented in 32 bit as follows
@@ -93,6 +93,7 @@ E.g. suppose that a part of the above decomposition was \\( 0.625 \\). This valu
 unsigned byte in the range \\( [0;255] \\). In binary \\( 160 \\) is `10100000` and this amount will be stored in one of the 8-bit buffers.
 The exponent is therefore implicitly deduced.
 
+Furthermore it might be worth repeating that the above considerations and the code snippets only work for floating point values in the range \\( [0;1] \\).
 
 Credits
 =======
