@@ -33,7 +33,7 @@ will generate a series of values as follows
 
     0 1 2 3 4 5 ..
 
-this is a simple [divergent series](https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF) whose partial sum is given by
+this is a simple [triangular number](https://en.wikipedia.org/wiki/Triangular_number) whose partial sum is given by
 
 $$ \sum_{k=1}^n k = \frac{n(n+1)}{2} $$
 
