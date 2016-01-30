@@ -45,7 +45,6 @@ Code to solve the problem in a dynamic programming fashion and backtrack the sol
 #include <tuple>
 #include <cmath>
 #include <algorithm>
-using namespace std;
 
 // A predecessor node. Identifies a D(n,s) cell and stores
 // whether the n-th coin was used in a solution path
@@ -131,8 +130,8 @@ bool findSSS(int sum, std::vector<int>& res) {
         dp[i][j] = rv;
       }
 
-    } // i
-  } // j
+    } // j
+  } // i
 
   // After everything has been calculated, check if D(n,s) is not INF (i.e. there's
   // a min sequence of squares)
@@ -169,9 +168,9 @@ int main() {
 
   if (found) {
     for (auto& v : result)
-      cout << v << " ";
+      std::cout << v << " ";
   }
-  cout << endl;
+  std::cout << std::endl;
 
   return 0;
 }
