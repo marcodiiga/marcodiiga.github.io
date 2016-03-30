@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Automatic camera calibration"
+title:  "Automatic radial lens undistortion"
 categories: algorithms
 ---
 
@@ -8,6 +8,6 @@ This is a follow up to the [previous post]({% post_url 2016-01-12-radial-lens-un
 
 ![image](images/posts/automaticcameracalibration1.png)
 
-The post is available on [GeoFront's blog](http://geofront.eu/blog/automatic-camera-calibration.html).
+The post is available on [GeoFront's blog](http://geofront.eu/blog/automatic-radial-lens-undistortion.html).
 
 A live demo of the algorithm is available [here](http://marcodiiga.github.io/lens_distortion_filtering/automatic_lens_distortion_filtering.html) (*GPU intensive*)
