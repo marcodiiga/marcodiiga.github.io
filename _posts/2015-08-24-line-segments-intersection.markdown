@@ -59,15 +59,15 @@ Two segments \\( {p_1,p_2} \\) and \\( {q_1,q_2} \\) intersect \\( \iff \\) one 
 
 1. General case
 
-\\( {p_1,p_2,q_1} \\) and \\( {p_1,p_2,q_2} \\) have different orientations **and** \\( {q_1,q_2,p_1} \\) and \\( {q_1,q_2,p_2} \\) have different orientations
+    \\( {p_1,p_2,q_1} \\) and \\( {p_1,p_2,q_2} \\) have different orientations **and** \\( {q_1,q_2,p_1} \\) and \\( {q_1,q_2,p_2} \\) have different orientations
 
-![image](/images/posts/linesegmentintersection4.png)
+    ![image](/images/posts/linesegmentintersection4.png)
 
 2. Special case
 
-All the points are collinear **and** either \\( q_1 \\) lies between \\( p_1 \\) and \\( p_2 \\) or \\( q_2 \\) lies between \\( p_1 \\) and \\( p_2 \\) (by checking the *x*-projections and *y*-projections).
+    All the points are collinear **and** either \\( q_1 \\) lies between \\( p_1 \\) and \\( p_2 \\) or \\( q_2 \\) lies between \\( p_1 \\) and \\( p_2 \\) (by checking the *x*-projections and *y*-projections).
 
-![image](/images/posts/linesegmentintersection5.png)
+    ![image](/images/posts/linesegmentintersection5.png)
 
 The code for intersection testing follows
 
