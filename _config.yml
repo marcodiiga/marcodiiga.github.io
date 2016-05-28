@@ -8,6 +8,8 @@ github:  marcodiiga
 stackoverflow: 1938163
 googleplus: MarcoAlesiani
 linkedin: marcodiiga
+# Posts with a date in the future can be seen immediately
+future: true
 
 # Build settings
 markdown: kramdown

@@ -6,8 +6,6 @@ tags: algorithms machine-learning
 
 *(This post is also available as a Jupyter notebook file [here](https://gist.github.com/marcodiiga/2174e737235b766e2540d39535a1b714))*
 
-# Linear Regression
-
 Linear regression is a mathematical approach to modeling the unknown parameters of linear predictor functions from data estimates. Let's suppose we have a discrete [uniformly distributed](https://en.wikipedia.org/wiki/Uniform_distribution_(discrete)) set of data (we'll apply an ongoing bias and a spreading factor to better model an event sampling)
 
 
@@ -36,41 +34,37 @@ x, y = generateRandomData(35)
 plotScatterData(x, y)
 ```
 
+
 ![png](images/posts/linearregression1.png)
 
 
-In the case for a linear regression (linear polynomial) we're interested in determining the $$\theta$$ parameters for the *hypothesis h* defined as
+In the case for a linear regression (linear polynomial) we're interested in determining the parameters $\theta_1$ and $\theta_2$ for the *hypothesis* $h_\theta(x)$ defined as
 
 $$
 h_\theta(x) = \theta_0 + \theta_1x
 $$
 
-If we define a generic *h(theta)* by assigning, for instance, $$\theta_1 = 1 \ \theta_2 = 1$$ we will have an error that can be estimated by using the **sum of the squared error** method
+If we define a generic $h_\theta(x)$ by assigning, for instance, $\theta_1 = 1$ and $\theta_2 = 1$, we will have an error that can be estimated by using the **sum of the squared error** method
 
 $$
-J(\theta_1, \theta_2)=\sum^{m}_{i=1}{(h_\theta(x^{(i)} - y^{(i)})^2}
+J(\theta_1, \theta_2)=\sum^{m}_{i=1}{(h_\theta(x^{(i)}) - y^{(i)})^2}
 $$
 
-and therefore the optimization problem we need to solve is finding 
-$$min \ J(\theta_1, \theta_2)$$
+and therefore the optimization problem we need to solve is finding $min \ J(\theta_1, \theta_2)$
 
 ## Gradient Descent
-A straightforward approach to solving the optimization problem explained in the previous paragraph is the gradient descent method. The idea is to compute 
-$$\nabla J(\theta_1, \theta_2)$$
-and use it as a negative gradient to find the decreasing direction of the multi-variable function *J*.
+A straightforward approach to solving the optimization problem explained in the previous paragraph is the gradient descent method. The idea is to compute $\nabla J(\theta_1, \theta_2)$ and use it as a negative gradient to find the decreasing direction of the multi-variable function $J$.
 
-Therefore (we're adding a 
-$$\frac{1}{2m}$$
-factor to simplify computation)
+Therefore (we're adding a $\frac{1}{2m}$ factor to simplify computation)
 
 $$
 \begin{align}
-& \frac{\partial}{\partial \theta_1}J(\theta_1, \theta_2) = \frac{1}{m} \sum^{m}_{i=1}{(h_\theta(x^{(i)} - y^{(i)})^2} \\
-& \frac{\partial}{\partial \theta_2}J(\theta_1, \theta_2) = \frac{1}{m} \sum^{m}_{i=1}{(h_\theta(x^{(i)} - y^{(i)})^2 x^{(i)}}
+& \frac{\partial}{\partial \theta_1}J(\theta_1, \theta_2) = \frac{1}{m} \sum^{m}_{i=1}{(h_\theta(x^{(i)}) - y^{(i)})^2} \\
+& \frac{\partial}{\partial \theta_2}J(\theta_1, \theta_2) = \frac{1}{m} \sum^{m}_{i=1}{(h_\theta(x^{(i)}) - y^{(i)})^2 x^{(i)}}
 \end{align}
 $$
 
-If we choose a suitable $$\alpha$$ factor (the *learning rate*) for the descent in the $$-\nabla$$ direction (a compromise between convergence speed and actually converging to a function minimum), the algorithm becomes
+If we choose a suitable $\alpha$ factor (the *learning rate*) for the descent in the $-\nabla$ direction (a compromise between convergence speed and actually converging to a function minimum), the algorithm becomes
 
     while(!converged) {
       theta1 = theta1 - alpha * nabla[0];
@@ -113,7 +107,7 @@ def plotLinearPredictor(x, y, theta_coefficients):
     plt.plot(x, y_regression)
     plt.show()
     
-theta_coefficients = gradientDescent(x, y, 0.001, 1000)
+theta_coefficients = gradientDescent(x, y, 0.001, 100000)
 
 plotLinearPredictor(x, y, theta_coefficients)
 ```
@@ -130,7 +124,7 @@ $$
 \forall \ j \quad \theta_j = \theta_j - \alpha \frac{\partial}{\partial \theta_j}J(\theta_1, \theta_2, \cdots, \theta_n) = \frac{1}{m} \sum^{m}_{i=1}{(h_\theta(x^{(i)} - y^{(i)})^2} x^{(i)}_j
 $$
 
-where $$x^{(i)}_j$$ is the $$j$$-th feature $$i$$-th sample.
+where $x^{(i)}_j$ is the $j$-th feature $i$-th sample.
 
 ## Normal equation method
 
@@ -140,7 +134,7 @@ $$
 \theta \in \mathbb R^{n+1} \quad \forall \ j \quad \frac{\partial}{\partial \theta_j}J(\theta) = 0
 $$
 
-although this is straightforward, there's a simpler method to calculate the system solution vector. Let us define a *design matrix* and a $$y$$ vector for the training data
+although this is straightforward, there's a simpler method to calculate the system solution vector. Let us define a *design matrix* and a $y$ vector for the training data
 
 $$
  X = 
@@ -186,6 +180,7 @@ plotLinearPredictor(x, y, theta_coefficients)
 
 
 ![png](images/posts/linearregression3.png)
+
 
 ## Considerations
 
