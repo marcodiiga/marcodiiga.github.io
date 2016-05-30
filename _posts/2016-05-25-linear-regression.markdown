@@ -64,7 +64,7 @@ $$
 \end{align}
 $$
 
-If we choose a suitable $\alpha$ factor (the *learning rate*) for the descent in the $-\nabla$ direction (a compromise between convergence speed and actually converging to a function minimum), the algorithm becomes
+If we choose a suitable $$\alpha$$ factor (the *learning rate*) for the descent in the $$-\nabla$$ direction (a compromise between convergence speed and actually converging to a function minimum), the algorithm becomes
 
     while(!converged) {
       theta1 = theta1 - alpha * nabla[0];
