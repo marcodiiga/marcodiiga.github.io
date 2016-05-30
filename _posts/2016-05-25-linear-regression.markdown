@@ -38,19 +38,19 @@ plotScatterData(x, y)
 ![png](images/posts/linearregression1.png)
 
 
-In the case for a linear regression (linear polynomial) we're interested in determining the parameters $\theta_1$ and $\theta_2$ for the *hypothesis* $h_\theta(x)$ defined as
+In the case for a linear regression (linear polynomial) we're interested in determining the parameters $$\theta_1$$ and $$\theta_2$$ for the *hypothesis* $$h_\theta(x)$$ defined as
 
 $$
 h_\theta(x) = \theta_0 + \theta_1x
 $$
 
-If we define a generic $h_\theta(x)$ by assigning, for instance, $\theta_1 = 1$ and $\theta_2 = 1$, we will have an error that can be estimated by using the **sum of the squared error** method
+If we define a generic $$h_\theta(x)$$ by assigning, for instance, $$\theta_1 = 1$$ and $$\theta_2 = 1$$, we will have an error that can be estimated by using the **sum of the squared error** method
 
 $$
 J(\theta_1, \theta_2)=\sum^{m}_{i=1}{(h_\theta(x^{(i)}) - y^{(i)})^2}
 $$
 
-and therefore the optimization problem we need to solve is finding $min \ J(\theta_1, \theta_2)$
+and therefore the optimization problem we need to solve is finding $$min \ J(\theta_1, \theta_2)$$
 
 ## Gradient Descent
 A straightforward approach to solving the optimization problem explained in the previous paragraph is the gradient descent method. The idea is to compute $$\nabla J(\theta_1, \theta_2)$$ and use it as a negative gradient to find the decreasing direction of the multi-variable function *J*.
