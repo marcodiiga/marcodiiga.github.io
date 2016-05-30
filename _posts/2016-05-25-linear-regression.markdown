@@ -53,9 +53,9 @@ $$
 and therefore the optimization problem we need to solve is finding $min \ J(\theta_1, \theta_2)$
 
 ## Gradient Descent
-A straightforward approach to solving the optimization problem explained in the previous paragraph is the gradient descent method. The idea is to compute $\nabla J(\theta_1, \theta_2)$ and use it as a negative gradient to find the decreasing direction of the multi-variable function $J$.
+A straightforward approach to solving the optimization problem explained in the previous paragraph is the gradient descent method. The idea is to compute $$\nabla J(\theta_1, \theta_2)$$ and use it as a negative gradient to find the decreasing direction of the multi-variable function *J*.
 
-Therefore (we're adding a $\frac{1}{2m}$ factor to simplify computation)
+Therefore (we're adding a $$\frac{1}{2m}$$ factor to simplify computation)
 
 $$
 \begin{align}
