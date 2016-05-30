@@ -124,7 +124,7 @@ $$
 \forall \ j \quad \theta_j = \theta_j - \alpha \frac{\partial}{\partial \theta_j}J(\theta_1, \theta_2, \cdots, \theta_n) = \frac{1}{m} \sum^{m}_{i=1}{(h_\theta(x^{(i)} - y^{(i)})^2} x^{(i)}_j
 $$
 
-where $x^{(i)}_j$ is the $j$-th feature $i$-th sample.
+where $$x^{(i)}_j$$ is the $$j$$-th feature $$i$$-th sample.
 
 ## Normal equation method
 
@@ -134,7 +134,7 @@ $$
 \theta \in \mathbb R^{n+1} \quad \forall \ j \quad \frac{\partial}{\partial \theta_j}J(\theta) = 0
 $$
 
-although this is straightforward, there's a simpler method to calculate the system solution vector. Let us define a *design matrix* and a $y$ vector for the training data
+although this is straightforward, there's a simpler method to calculate the system solution vector. Let us define a *design matrix* and a $$y$$ vector for the training data
 
 $$
  X = 
