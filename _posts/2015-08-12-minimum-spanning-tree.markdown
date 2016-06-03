@@ -92,6 +92,8 @@ public:
     int x = findComponentFor(node1);
     int y = findComponentFor(node2);
 
+    if (x == y) return; // Already same component
+
     if (subcomponents[x].rank > subcomponents[y].rank)
       subcomponents[y].parent = x;
     else if (subcomponents[x].rank < subcomponents[y].rank)
@@ -211,6 +213,8 @@ public:
   void unionComponents(int node1, int node2) {
     int x = findComponentFor(node1);
     int y = findComponentFor(node2);
+
+    if (x == y) return; // Already same component
 
     if (subcomponents[x].rank > subcomponents[y].rank)
       subcomponents[y].parent = x;
