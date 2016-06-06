@@ -9,7 +9,25 @@ tags: algorithms
 Solution I
 ==========
 
-A simple and straightforward algorithm to perform a vector rotation relies on three subvector inversions. Let's suppose we have a vector \\( v \\), `begin` and `end` positions \\( [i,j[ \\) and a split point \\( s \\).
+Trivial solution: use an auxiliary vector to rotate the vector by \\( k \\) positions
+
+{% highlight c++ %}
+template <typename T>
+vector<T> rotate(vector<T>& v, int K) {
+  while (K > A.size()) // Error checking
+    K %= A.size();
+  vector<T> ret; 
+  for (auto i = 0; i < A.size(); i++)
+    ret.push_back(A[(i + K) % A.size()]);
+  return ret; 
+}
+{% endhighlight %}
+
+Time \\( O(N) \\), space \\( O(N) \\).
+
+Solution II
+===========
+A better space-efficient algorithm to perform a vector rotation relies on three subvector inversions. Let's suppose we have a vector \\( v \\), `begin` and `end` positions \\( [i,j[ \\) and a split point \\( s \\).
 We can construct the output vector \\( v' \\) as follows
 
 $$ v' = \phi( \phi(v_{i,s}), \phi(v_{s,j}) ) $$
@@ -42,12 +60,12 @@ void rotate(BidirectionalIt start, BidirectionalIt n_start, BidirectionalIt end)
 }
 {% endhighlight %}
 
-The algorithm runs in \\( O(N) \\).
+The algorithm runs in \\( O(N) \\) and \\( O(1) \\) space.
 
-Solution II
-===========
+Solution III
+============
 
-A second, slightly more complex approach which often exhibits better data locality is now presented. The key to understanding it is considering three separate cases:
+A third more complex approach which often exhibits better data locality is now presented. The key to understanding it is considering three separate cases:
 
 1. \\( s = \frac{j - i}{2} \\)
 
