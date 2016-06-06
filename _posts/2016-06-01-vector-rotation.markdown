@@ -14,16 +14,17 @@ Trivial solution: use an auxiliary vector to rotate the vector by \\( k \\) posi
 {% highlight c++ %}
 template <typename T>
 vector<T> rotate(vector<T>& v, int K) {
-  while (K > A.size()) // Error checking
-    K %= A.size();
+  assert(K >= 0);
+  while (K > v.size()) // Error checking
+    K %= v.size();
   vector<T> ret; 
-  for (auto i = 0; i < A.size(); i++)
-    ret.push_back(A[(i + K) % A.size()]);
+  for (auto i = 0; i < v.size(); i++)
+    ret.push_back(v[(i + K) % v.size()]);
   return ret; 
 }
 {% endhighlight %}
 
-Time \\( O(N) \\), space \\( O(N) \\).
+Time \\( O(N) \\), space \\( O(N) \\); it doesn't work with negative \\( k \\) values.
 
 Solution II
 ===========
