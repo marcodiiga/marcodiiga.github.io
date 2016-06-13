@@ -323,6 +323,42 @@ int main() {
 
 Complexity is \\( O(\log{m} + \log{n}) \\) where \\( m,n \\) are the lengths of the vectors.
 
+
+A logarithmic solution based on K-th order statistics
+-----------------------------------------------------
+
+An easier solution which doesn't feature as many corner cases relies on a sorted variation of [k-th order statistic]({% post_url 2015-08-05-kth-order-statistic %})
+and works by progressively discharging half of the interval necessary to reach \\( k \\) till convergence.
+
+{% highlight c++ %}
+int findKth(const vector<int>& v1, int v1_start, const vector<int>& v2, int v2_start, int k) {
+  if (v1_start >= v1.size()) return v2[v2_start + k - 1];
+  if (v2_start >= v2.size()) return v1[v1_start + k - 1];
+  if (k == 1) return min(v1[v1_start], v2[v2_start]);
+
+  const int delta = k / 2;
+
+  int val1 = (v1_start + delta - 1 < v1.size()) ? v1[v1_start + delta - 1] : numeric_limits<int>::max();
+  int val2 = (v2_start + delta - 1 < v2.size()) ? v2[v2_start + delta - 1] : numeric_limits<int>::max();
+
+  if (val1 < val2)
+    return findKth(v1, v1_start + delta, v2, v2_start, k - delta);
+  else
+    return findKth(v1, v1_start, v2, v2_start + delta, k - delta);
+}
+
+double findMedianSortedVectors(const vector<int> &v1, const vector<int> &v2) {
+  int len = v1.size() + v2.size();
+  if (len & 0x1) // is_odd
+    return findKth(v1, 0, v2, 0, len / 2 + 1);
+  else
+    return (findKth(v1, 0, v2, 0, len / 2) + findKth(v1, 0, v2, 0, len / 2 + 1)) / 2.0;
+}
+{% endhighlight %}
+
+The calculations are performed with one-based elements and ensure logarithmic complexity and are suited to find any \\( k \\) index element in two sorted arrays.
+
+
 References
 ==========
 
