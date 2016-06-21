@@ -14,7 +14,7 @@ Trivial solution: cycling through the array in \\( O(N^2) \\)
 {% highlight c++ %}
 int evenSumSubarrays(const vector<int>& vec) {
   int even = 0;
-  for (auto i = vec.begin(); i != vec.end(); ++i) {
+  for (auto i = vec.begin(), ie = vec.end(); i != ie; ++i) {
     for (auto j = i + 1;; ++j) {
       even += (accumulate(i, j, 0) % 2 == 0);
       if (j == vec.end()) break;
@@ -53,7 +53,7 @@ nodes, etc.. therefore yielding the same amount. We can therefore linearly count
 {% highlight c++ %}
 int evenSumSubarrays(const vector<int>& vec) {
   int sum = 0, odds = 0, evens = 1; // Insert a virtual node
-  for (auto it = vec.begin(); it != vec.end(); ++it) {
+  for (auto it = vec.begin(), ie = vec.end(); it != ie; ++it) {
     sum = (sum + *it) % 2;
     (sum == 0) ? ++evens : ++odds;
   }
