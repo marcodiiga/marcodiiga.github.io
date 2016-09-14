@@ -17,7 +17,9 @@ and do a [line segments intersection]({% post_url 2015-08-24-line-segments-inter
 ![image](/images/posts/pointinpolygonproblem1.png)
 
 Special attention deserve two cases:
+
 * when segment \\( \overline{p \ p_{inf}} \\) has a successful intersection test and \\( p \\) is found collinear to the polygon edge: if \\( p \\) lies in the polygon edge segment, any further check can be skipped since the point lies on the border of the polygon
+
 * when the `to_infinity` segment crosses one or more vertices of the polygon the intersection has to be counted once (thanks *B Soma Naik* for spotting this)
 
 Algorithm follows
