@@ -7,7 +7,9 @@ tags: algorithms python image-processing
 GPU image processing operations can often be renderered substantially
 faster when using a [separable kernel](https://en.wikipedia.org/wiki/Separable_filter).
 Separable kernels are the result of [tensor product](https://en.wikipedia.org/wiki/Outer_product)
-between constituent vectors and have rank 1.
+between constituent vectors and have rank 1. The constituent vectors can be found
+by [singular value decomposition](http://blogs.mathworks.com/steve/2006/11/28/separable-convolution-part-2/),
+anyway in this article we'll present an alternative approach.
 
 The key observation is that all their rows and columns are multiple of the constituent vectors
 i.e. all of their elements are of the form \\( m_{i,j} = a_i k \\) where \\( k \\) is a
