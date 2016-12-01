@@ -11,7 +11,7 @@ tags: algorithms javascript
 SO question link [here](http://stackoverflow.com/q/21576092/1938163).
 Code for my answer given [here](http://stackoverflow.com/a/21576659/1938163).
 
-Live demo
+Live demo (requires Javascript enabled)
 <p align="center" style="border:1px solid lightgrey; padding-right: 10px;">
 <iframe scrolling="no" src="http://marcodiiga.github.io/rgba2rgb/rgba2rgb.html" width="100%" height="700" style="border: none;"></iframe>
 </p>
