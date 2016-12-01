@@ -33,7 +33,7 @@ tuple<int, int, int> maximumSubarrayLength(vector<int>& vec) {
       current_max_end = i;
     }
   }
-  return tie(total_max, current_max_start, current_max_end);
+  return make_tuple(total_max, current_max_start, current_max_end);
 }
 {% endhighlight %}
 
