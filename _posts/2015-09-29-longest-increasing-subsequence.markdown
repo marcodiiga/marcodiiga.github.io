@@ -48,9 +48,9 @@ int longestIncreasingSubsequence(vector<int>& vec) {
     while (lo <= hi) {
       int mid = static_cast<int>(ceil((lo + hi) / 2.0f));
       if (vec[i] > lis[mid])
-        ++lo;
+        lo = mid + 1;
       else
-        --hi;
+        hi = mid - 1;
     }
     if (lo >= lis_max)
       ++lis_max;
@@ -67,5 +67,3 @@ int main() {
   return 0;
 }
 {% endhighlight %}
-
-
