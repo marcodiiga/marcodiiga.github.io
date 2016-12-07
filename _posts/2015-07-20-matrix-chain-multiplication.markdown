@@ -37,7 +37,7 @@ int main() {
   // matrix2 is B x C
 
   // Matrix multiplication. The resulting matrix is
-  // (A x B) x (A x C) = A x C
+  // (A x B) x (B x C) = A x C
   std::vector<std::vector<int>> result(A, std::vector<int>(C, 0));
 
   for (size_t a = 0; a < A; ++a) {
