@@ -4,7 +4,7 @@ title:  "Segment trees"
 tags: algorithms c++
 ---
 > Given the heights of N people waiting in a line and for each person the number of
-taller people in front of him, find out their position in the line
+taller persons in front of him, find out their position in the line
 
 E.g. for the following line
 
@@ -19,7 +19,7 @@ output
 
     position_in_line = {3, 2, 5, 4, 1, 6}
 
-A simple but extremely inefficient approach could be to just bruteforce each permutation in \\( O(N!) \\).
+A simple but extremely inefficient approach could be to just *bruteforce* each permutation in \\( O(N!) \\).
 
 A better approach could be to order the input data by heights in ascending order:
 we can position the smallest element first since there are no smaller elements in
