@@ -13,7 +13,7 @@ E.g. for the following line
 given the input data
 
     heights  = {6, 1, 2, 4, 3, 5}
-		in_front = {0, 4, 1, 1, 0, 0}
+    in_front = {0, 4, 1, 1, 0, 0}
 
 output
 
@@ -44,7 +44,7 @@ Segment trees
 -------------
 A [segment tree](https://en.wikipedia.org/wiki/Segment_tree) is a data structure
 built as a full tree (a tree in which every node has either 0 or 2 children).
-Since the height of a binary tree is \\( h = \ceil[\log_2(N)] \\), the maximum
+Since the height of a binary tree is \\( h = \ceil(\log_2(N)) \\), the maximum
 number of nodes a full tree can be \\( max = 2(2^h) -1 \\).
 
 The structure stores the results of an interval predicate in a heap-indexed-like vector.
