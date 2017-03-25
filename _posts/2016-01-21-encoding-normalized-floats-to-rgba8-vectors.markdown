@@ -5,7 +5,7 @@ tags: algorithms computer-vision image-processing
 ---
 
 Back in the days when OpenGL ES 2.0 was the only viable way to perform efficient GPGPU computations on mobile devices, one
-might often need to pack and unpack a full single precision floating point value in the range \\( [0;1] \\) from/to a shader's output/input.
+might often need to pack and unpack a full single precision floating point value in the range \\( [0;1[ \\) from/to a shader's output/input.
 
 The following GLSL shader code does the trick
 
@@ -71,7 +71,7 @@ $$ \begin{align}
    \end{align}
 $$
 
-notice that some components have become positive: the number is no longer in the range \\( [0;1] \\). If we were to save these positive
+notice that some components have become positive: the number is no longer in the range \\( [0;1[ \\). If we were to save these positive
 components we could get the fractional part of this new number, dividing it by 256 (in order to shift it back in the original position)
 and subtract this quantity from the original number.
 
@@ -84,7 +84,7 @@ float reduced_fractional_part = fract(value * 256.0) * (1.0/256.0);
 first_part = original_number - reduced_fractional_part;
 {% endhighlight %}
 
-A graphical representation of the operations involved and of the packing performed by the `packFloatTOVec4i()` routine into the `vec4` parts 
+A graphical representation of the operations involved and of the packing performed by the `packFloatTOVec4i()` routine into the `vec4` parts
 follows
 
 ![image](/images/posts/encodingnormalizedfloatstorgb8vectors2.png)
@@ -93,13 +93,14 @@ E.g. suppose that a part of the above decomposition was \\( 0.625 \\). This valu
 unsigned byte in the range \\( [0;255] \\). In binary \\( 160 \\) is `10100000` and this amount will be stored in one of the 8-bit buffers.
 The exponent is therefore implicitly deduced.
 
-Furthermore it might be worth repeating that the above considerations and the code snippets only work for floating point values in the range \\( [0;1] \\).
+Furthermore it might be worth repeating that the above considerations and the code snippets only work for floating point values in the range \\( [0;1[ \\).
 
 Credits
 =======
 
-* The packing/unpacking routines were found on various websites and probably originated from [gamedev.net](http://www.gamedev.net/), 
+* The packing/unpacking routines were found on various websites and probably originated from [gamedev.net](http://www.gamedev.net/),
   in no way I claim ownership on these snippets.
 
 * A huge thank you to [Gernot Ziegler](http://www.geofront.eu/) for reviewing and helping me out with this post.
 
+* Thanks to [Bryan Wagner](https://github.com/marcodiiga/marcodiiga.github.io/issues/1) for pointing out a range error.
