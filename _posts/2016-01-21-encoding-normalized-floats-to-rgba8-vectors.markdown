@@ -26,7 +26,7 @@ float unpackFloatFromVec4i(const vec4 value) {
 
 but the interesting part is delving into why it works.
 
-Decomposing IEEE 754 floats in the range [0;1]
+Decomposing IEEE 754 floats in the range [0;1[
 ==============================================
 
 In [IEEE 754](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) single precision floating point numbers
