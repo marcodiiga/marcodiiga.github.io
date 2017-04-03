@@ -59,8 +59,8 @@ Therefore (we're adding a $$\frac{1}{2m}$$ factor to simplify computation)
 
 $$
 \begin{align}
-& \frac{\partial}{\partial \theta_1}J(\theta_1, \theta_2) = \frac{1}{m} \sum^{m}_{i=1}{(h_\theta(x^{(i)}) - y^{(i)})^2} \\
-& \frac{\partial}{\partial \theta_2}J(\theta_1, \theta_2) = \frac{1}{m} \sum^{m}_{i=1}{(h_\theta(x^{(i)}) - y^{(i)})^2 x^{(i)}}
+& \frac{\partial}{\partial \theta_1}J(\theta_1, \theta_2) = \frac{1}{m} \sum^{m}_{i=1}{(h_\theta(x^{(i)}) - y^{(i)})} \\
+& \frac{\partial}{\partial \theta_2}J(\theta_1, \theta_2) = \frac{1}{m} \sum^{m}_{i=1}{(h_\theta(x^{(i)}) - y^{(i)}) x^{(i)}}
 \end{align}
 $$
 
@@ -94,19 +94,19 @@ def gradientDescent(x, y, alphaFactor, numIterations):
         gradient[1] = np.dot(x_transposed, error_vector) / n_samples
 
         theta = theta - alphaFactor * gradient
-    
+
     return theta
 
 def plotLinearPredictor(x, y, theta_coefficients):
     plt.scatter(x, y)
-    
+
     y_regression = np.zeros(len(x))
     for sample in range(0, len(x)):
         y_regression[sample] = theta_coefficients[0] + theta_coefficients[1] * x[sample]
 
     plt.plot(x, y_regression)
     plt.show()
-    
+
 theta_coefficients = gradientDescent(x, y, 0.001, 100000)
 
 plotLinearPredictor(x, y, theta_coefficients)
@@ -128,7 +128,7 @@ where $$x^{(i)}_j$$ is the $$j$$-th feature $$i$$-th sample.
 
 ## Normal equation method
 
-An analytical solution exists and as it is the common case in calculus it involves 
+An analytical solution exists and as it is the common case in calculus it involves
 
 $$
 \theta \in \mathbb R^{n+1} \quad \forall \ j \quad \frac{\partial}{\partial \theta_j}J(\theta) = 0
@@ -137,7 +137,7 @@ $$
 although this is straightforward, there's a simpler method to calculate the system solution vector. Let us define a *design matrix* and a $$y$$ vector for the training data
 
 $$
- X = 
+ X =
  \begin{bmatrix}
  X^{(1)}_0 & X^{(1)}_1 & \cdots & X^{(1)}_n \\
  X^{(2)}_0 & X^{(2)}_1 & \cdots & X^{(2)}_n \\
