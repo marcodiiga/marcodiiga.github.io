@@ -46,7 +46,7 @@ can recursively evaluate each previous position for a better match, i.e. for a s
 e.g.
 
      thereverseisnottrue
-       ^ ^ 
+       ^ ^
        | |*
        | | cost log(1+3)
        |
@@ -123,7 +123,7 @@ string insertWhitespaces(const string& text) {
   int index = static_cast<int>(text.size());
   vector<string> resultReversed;
   while (predecessorCharacters[index] != -1) {
-    resultReversed.push_back(text.substr(index - 
+    resultReversed.push_back(text.substr(index -
                    predecessorCharacters[index], predecessorCharacters[index]));
     index -= predecessorCharacters[index];
   }
@@ -147,4 +147,4 @@ int main() {
 }
 {% endhighlight %}
 
-The code runs in \\( O(N) \\) and requires \\( O(N) \\) space.
+The code runs in \\( O(N^2) \\) and requires \\( O(N) \\) space.
