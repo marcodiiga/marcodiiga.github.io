@@ -32,8 +32,8 @@ int kmp(const string& text, const string& pattern) {
   // DFA construction step
   while (pattern_index < static_cast<int>(pattern.size())) {
     dfa[++dfa_index] = dfa[X0];
-    dfa[dfa_index][pattern[++pattern_index]] = dfa_index + 1;
-    X0 = dfa[X0][pattern[pattern_index]];
+    X0 = dfa[X0][pattern[++pattern_index]];
+    dfa[dfa_index][pattern[pattern_index]] = dfa_index + 1;    
   }
 
   int pos = 0;
