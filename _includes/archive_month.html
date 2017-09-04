@@ -1,0 +1,8 @@
+{% capture pagemonth %} {{ page.year | append: '-' | append: page.month }} {% endcapture %}
+
+{% for post in site.posts %}
+    {% capture postmonth %} {{ post.date | date: '%Y-%m' }} {% endcapture %}
+    {% if postmonth == pagemonth %}
+        {% include archive_postlisting.html %}
+    {% endif %}
+{% endfor %}

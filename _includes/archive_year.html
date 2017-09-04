@@ -1,0 +1,19 @@
+{% for post in site.posts %}
+    {% capture postyear %} {{ post.date | date: '%Y' }} {% endcapture %}
+    {% capture pageyear %} {{ page.year }} {% endcapture %}
+    {% capture postmonth %} {{ post.date | date: '%m%Y' }} {% endcapture %}
+    {% capture nextpostmonth %} {{ post.next.date | date: '%m%Y' }} {% endcapture %}
+
+    {% if postyear == pageyear %}
+        {% if postmonth != nextpostmonth %}
+            {% if forloop.index != 1 %}
+                </ul>
+            {% endif %}
+
+            <h2 class="month"><a href="{{ post.date | date: '/%Y/%m/' | prepend: site.baseurl }}">{{ post.date | date: '%B' }}</a></h2>
+            <ul>
+        {% endif %}
+
+        {% include archive_postlisting.html %}
+    {% endif %}
+{% endfor %}

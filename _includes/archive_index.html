@@ -1,0 +1,23 @@
+<ul>
+	<li>&raquo; <a href="{{ BASE_PATH }}/all">All posts</a></li>
+</ul>
+
+<h2 class="tags">Tags</h2>
+<ul class="all-tags">
+	{% for tag in site.tags %}
+		<li>&raquo; <a href="{{ tag[0] | downcase | replace: ' ', '-' | prepend:'/tags/' | prepend: site.baseurl }}">{{ tag[0] }}</a></li>
+	{% endfor %}
+</ul>
+
+<h2 class="tags">Posts by month</h2>
+<ul class="all-tags">
+{% for post in site.posts %}
+    {% capture month %}{{ post.date | date: '%m%Y' }}{% endcapture %}
+    {% capture next_month %}{{ post.next.date | date: '%m%Y' }}{% endcapture %}
+	
+	{% if month != next_month %}
+		<li>&raquo; <a href="{{ post.date | date: '/%Y/%m/' | prepend: site.baseurl }}">{{ post.date | date: '%b %Y' }}</a></li>
+	{% endif %}
+
+{% endfor %}
+<ul>

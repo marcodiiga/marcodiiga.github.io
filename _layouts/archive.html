@@ -1,0 +1,23 @@
+---
+type: archive
+layout: default
+---
+
+{% if page.title == 'Archive' %}
+	<h1>{{ page.title }}</h1>
+	{% include archive_index.html %}
+{% else %}
+	<h1>Archive: {{ page.title }}</h1>
+{% endif %}
+
+{% unless page.title == 'Archive' %}
+	<ul>
+		{% if page.month %}
+			{% include archive_month.html %}
+		{% elsif page.year %}
+			{% include archive_year.html %}
+		{% elsif page.tag %}
+			{% include archive_tag.html %}
+		{% endif %}
+	</ul>
+{% endunless %}
