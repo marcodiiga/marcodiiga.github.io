@@ -2,7 +2,7 @@
 	<li>&raquo; <a href="{{ BASE_PATH }}/all">All posts</a></li>
 </ul>
 
-<h2 class="tags">Tags</h2>
+<h2 class="tags">Posts by tag</h2>
 <ul class="all-tags">
 	{% for tag in site.tags %}
 		<li>&raquo; <a href="{{ tag[0] | downcase | replace: ' ', '-' | prepend:'/tags/' | prepend: site.baseurl }}">{{ tag[0] }}</a></li>
