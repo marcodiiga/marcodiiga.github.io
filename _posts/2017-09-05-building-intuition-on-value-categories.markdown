@@ -183,10 +183,12 @@ The remaining two broader categories lie at the intersection of the ones outline
 
 The distinction is often subtle but key to instruct programs to better manipulate objects/memory regions and understanding move semantics (and lengthy compiler errors as well).
 
-## References
+## References and credits
 
 * [C++ Standard n4687](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/n4687.pdf)
 
 * [What are rvalues, lvalues, xvalues, glvalues, and prvalues?](https://stackoverflow.com/questions/3601602/what-are-rvalues-lvalues-xvalues-glvalues-and-prvalues)
 
 * [What expressions yield a reference type when decltype is applied to them?](https://stackoverflow.com/questions/17241614/what-expressions-yield-a-reference-type-when-decltype-is-applied-to-them)
+
+*Special thanks to [Simon Brand](https://blog.tartanllama.xyz/) and lounge<C++> for reviewing this post.*
