@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "Understanding Value Categories"
+title:  "Building intuition on Value Categories"
 tags: c++
 ---
 
-*This post is intended to be used as an intuitive explanation on some of the main points on the subject rather than a thorough explanation of value categories. You're encouraged to report errors / unclear parts / suggestions on the [issue tracker](https://github.com/marcodiiga/marcodiiga.github.io/issues).*
+*This post aims to be an intuitive (rather than a thorough) explanation of value categories. It assumes a certain degree of prior knowledge regarding [move semantics](https://stackoverflow.com/q/3106110/1938163) and the C++ language. You're encouraged to report errors / unclear parts / suggestions on the [issue tracker](https://github.com/marcodiiga/marcodiiga.github.io/issues).*
 
 ## Expressions
 
@@ -35,7 +35,7 @@ a = ++x; // ++x is an expression and has side effects (it doesn't just return a 
 
 An expression is characterized by two important properties:
 
-* the type it returns
+* its type
 * its *value category*
 
 Understanding the value category of an expression is important because instructs the programmer on what kind of operations are allowed on it and possibly on the lifetime expectancy of the entities involved as well.
@@ -127,7 +127,7 @@ This allows us to dive more into the definitions given in the standard:
   // int&& rvr = x; // Wrong: the expression x doesn't designate an rvalue
   ```
 
-  A function whose return type is a *lvalue* expression is an *lvalue* as well
+  A call to a function which returns an *lvalue* reference is an *lvalue* as well
 
   ```cpp
   int x;
@@ -150,7 +150,7 @@ This allows us to dive more into the definitions given in the standard:
 
 * *xvalues* are eXpiring values: *glvalues* (they do have an identity) whose resources are also marked as *movable*.
 
-    A call to a function whose return type is an *rvalue reference* is an *xvalue*
+    A call to a function which returns an *rvalue reference* is an *xvalue*
 
   ```cpp
   int x;
