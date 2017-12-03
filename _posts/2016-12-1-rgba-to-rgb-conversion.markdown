@@ -13,5 +13,5 @@ Code for my answer given [here](http://stackoverflow.com/a/21576659/1938163).
 
 Live demo (requires Javascript enabled)
 <p align="center" style="border:1px solid lightgrey; padding-right: 10px;">
-<iframe scrolling="no" src="http://marcodiiga.github.io/rgba2rgb/rgba2rgb.html" width="100%" height="700" style="border: none;"></iframe>
+<iframe scrolling="no" src="https://marcodiiga.github.io/rgba2rgb/rgba2rgb.html" width="100%" height="700" style="border: none;"></iframe>
 </p>
