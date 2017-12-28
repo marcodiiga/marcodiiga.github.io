@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Find triplets that sum up to zero"
+title:  "Find unique triplets that sum up to zero"
 tags: c++ algorithms
 ---
 
