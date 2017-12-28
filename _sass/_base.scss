@@ -186,6 +186,7 @@ code {
 pre {
     padding: 8px 12px;
     overflow-x: scroll;
+	overflow-y: hidden;
 
     > code {
         border: 0;
