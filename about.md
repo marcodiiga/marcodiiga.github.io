@@ -12,17 +12,19 @@ Code and licenses
 
 All the pages for this website are available on [Github](https://github.com/marcodiiga/marcodiiga.github.io)
 
-Unless otherwise adviced in the article, all algorithms and snippets are licensed under a
+<center>
+<a href="http://creativecommons.org/licenses/by/4.0/" alt="CC-BY 4.0"><img src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a>
+</center>
+
+Unless otherwise advised in the article, all contents are licensed under
 [CC-BY 4.0](http://creativecommons.org/licenses/by/4.0/)
 
-[![CC-A4](https://licensebuttons.net/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)
-
 Code listings may trade speed / error handling for clarity and readability for explanation's sake.
-Use them at your own risk.
+Use them at your own risk. This is **not** production code.
 
 Feedback / Errors
 =================
-Please direct your feedback or error reports (either related to the website or to the contents therein)
+Please direct your feedback/comments or error reports (either related to the website or to the contents therein)
  to the [issues tracker](https://github.com/marcodiiga/marcodiiga.github.io/issues)
 
 Credits:
