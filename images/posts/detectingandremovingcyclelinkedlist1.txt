@@ -1,0 +1,18 @@
+digraph MST {
+  graph [rankdir=LR fontsize=10 fontname="helvetica"];
+
+  0 [fontname = "helvetica" label="-2" pos="0, 0!"];
+  1 [fontname = "helvetica" label="-1" pos="1.5, 0!"];
+  2 [fontname = "helvetica" label="0" pos="3, 0!"];
+  3 [fontname = "helvetica" label="1" pos="4.5, 0!"];
+  4 [fontname = "helvetica" label="2" pos="4.5,-1!"];
+  5 [fontname = "helvetica" label="3" pos="3,-1!"];
+
+  edge[splines=curved];
+  0 -> 1;
+  1 -> 2;
+  2 -> 3;  
+  3 -> 4;
+  4 -> 5;
+  5 -> 2;
+}
