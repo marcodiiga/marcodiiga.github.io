@@ -56,6 +56,9 @@
         }
     }
 
+	/*
+		Hamburger menu - doesn't look too good with just a single item
+		
     @include media-query($on-palm) {
         position: absolute;
         top: 9px;
@@ -99,6 +102,7 @@
             padding: 5px 10px;
         }
     }
+	*/
 }
 
 
